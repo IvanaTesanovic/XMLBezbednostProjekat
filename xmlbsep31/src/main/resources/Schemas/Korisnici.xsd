@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.skupstinans.rs"
+    targetNamespace="http://www.skupstinans.rs" elementFormDefault="qualified">
+    <xs:element name="Korisnici">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="Korisnik" type="TipKorisnik"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TipKorisnik">
+        <xs:sequence>
+            <xs:element name="KorisnickoIme" type="xs:string"/>
+            <xs:element name="Ime" type="xs:string"/>
+            <xs:element name="Prezime" type="xs:string"/>
+            <xs:element name="Uloga" type="xs:string"/>
+            <xs:element name="Lozinka" type="xs:string"/>
+            <xs:element name="Email" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

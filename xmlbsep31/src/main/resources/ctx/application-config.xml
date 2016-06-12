@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+	<!-- Core configuration -->
+	<import resource="classpath:/ctx/bean-config.xml" />
+
+	<!-- Spring MVC -->
+	<import resource="classpath:/ctx/mvc-config.xml" />
+	
+	<!-- Spring Security -->
+	<import resource="classpath:/ctx/spring-security-config.xml" /> 
+	
+	<!-- Persistence API -->
+	<import resource="classpath:/ctx/persistence-config.xml" /> 
+
+</beans>

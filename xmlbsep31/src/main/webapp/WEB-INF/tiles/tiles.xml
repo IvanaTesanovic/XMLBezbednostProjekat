@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	
+	<definition name="appLayout" template="/WEB-INF/jsp/layout/appLayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="first" extends="appLayout">
+		<put-attribute name="title" value="login.title" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/first.jsp" />
+	</definition>
+	
+	<definition name="login" extends="appLayout">
+		<put-attribute name="title" value="login.title" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/login.jsp" />
+	</definition>
+	
+	<definition name="signup" extends="appLayout">
+		<put-attribute name="title" value="signup.title" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/signup.jsp" />
+	</definition>
+	
+	<definition name="home" extends="appLayout">
+		<put-attribute name="title" value="home.title" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/home.jsp" />
+	</definition>
+	
+	<definition name="profile" extends="appLayout">
+		<put-attribute name="title" value="home.profile" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/profile.jsp" />
+	</definition>
+	
+	<definition name="restaurants" extends="appLayout">
+		<put-attribute name="title" value="home.restaurants" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/restaurants.jsp" />
+	</definition>
+	
+	<definition name="addRestaurant" extends="appLayout">
+		<put-attribute name="title" value="restaurant.add" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/addRestaurant.jsp" />
+	</definition>
+	
+	<definition name="editMenu" extends="appLayout">
+		<put-attribute name="title" value="restaurant.addmenu" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/editMenu.jsp" />
+	</definition>
+	
+	<definition name="spisakAkata" extends="appLayout">
+		<put-attribute name="title" value="akati.title" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/spisakAkata.jsp" />
+	</definition>
+	
+	<definition name="sednica" extends="appLayout">
+		<put-attribute name="title" value="sednica.title" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/sednica.jsp" />
+	</definition>
+	
+	<definition name="dodajAkt" extends="appLayout">
+		<put-attribute name="title" value="akati.dodaj" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/dodajAkt.jsp" />
+	</definition>
+	
+	<definition name="dodajAmandman" extends="appLayout">
+		<put-attribute name="title" value="amandmani.dodaj" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/dodajAmandman.jsp" />
+	</definition>
+	
+</tiles-definitions>

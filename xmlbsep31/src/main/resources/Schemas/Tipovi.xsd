@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.skupstinans.rs/tipovi"
+    targetNamespace="http://www.skupstinans.rs/tipovi" elementFormDefault="qualified">
+    <xs:complexType name="TipGradjanin">
+        <xs:sequence>
+            <xs:element name="ime" type="xs:string"/>
+            <xs:element name="prezime" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TipOdbornik">
+        <xs:complexContent>
+            <xs:extension base="TipGradjanin">
+                <xs:sequence>
+                    <xs:element name="Stranka" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TipPredsednik">
+        <xs:complexContent>
+            <xs:extension base="TipOdbornik">
+                <xs:sequence>
+                    <xs:element name="Mandat" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TipDeo">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="glava">
+                <xs:complexType>
+                    <xs:attribute name="ID"/>
+                    <xs:attribute name="naziv" type="xs:string"/>
+                    <xs:attribute name="redniBroj" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
