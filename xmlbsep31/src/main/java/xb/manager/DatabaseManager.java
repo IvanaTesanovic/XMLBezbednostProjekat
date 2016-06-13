@@ -20,6 +20,7 @@ import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.InputStreamHandle;
 
 import xb.conversion.JaxbXMLConverter;
+import xb.signing.SignEnveloped;
 
 /**
  * Sadrzi operacije koje se obavljaju nad bazom podataka.
@@ -76,6 +77,8 @@ public class DatabaseManager<T> {
 	 */
 	public void writeObjectToDB(T object, String docId, String collId){
 		String outputPath = "tem.xml";
+		//nakon kreiranja temporary dokumenta, treba ga potpisati u tek onda poslati na server
+		SignEnveloped.sign(outputPath);
 		try {
 			//File file = new File(FirstController.class.getClassLoader().getResource("Output/tempXML.xml").toURI());
 			if(converter.marshalling(outputPath, object))
