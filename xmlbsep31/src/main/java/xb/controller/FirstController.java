@@ -1,15 +1,19 @@
 package xb.controller;
 
+import java.util.Random;
+import java.util.UUID;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
 import xb.database.Util;
 import xb.manager.DatabaseManager;
 import xb.manager.ObjectManager;
-import xb.model.Korisnici;
-import xb.model.TipKorisnik;
+import xb.model.Zakon;
 
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
@@ -18,12 +22,12 @@ import xb.model.TipKorisnik;
  * @author Ivana
  *
  */
-@Controller
+@RestController
 @RequestMapping("/first")
 public class FirstController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String get() {
+	public ModelAndView get() {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 //		
@@ -41,7 +45,17 @@ public class FirstController {
 //		
 //		korisnici.writeObjectToDB(korisnicii, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
 		
-		return "first";
+		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
+		Zakon zak = new Zakon();
+		Random rand = new Random();
+		String id = String.valueOf(rand.nextInt());
+		
+		zak.setID(id);
+		zak.setNaziv("zakon" + id);
+		
+		zakon.writeObjectToDB(zak, DatabaseConnection.AKT_DOC_ID + id + DatabaseConnection.ID_SUFFIX, DatabaseConnection.AKT_COL_ID);
+		
+		return new ModelAndView("first");
 	}
 
 }

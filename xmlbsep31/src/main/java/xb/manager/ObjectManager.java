@@ -22,17 +22,13 @@ import xb.database.DatabaseConnection;
 public class ObjectManager<T> {
 	
 	private DatabaseClient client;
-	//private String docId = "/project/books.xml";
-	//private String collId = "/projectCol";
 	private DatabaseManager<T> dbManager;
 	private XMLDocumentManager xmlDocManager;
 	private JaxbXMLConverter<T> converter;
 	private SchemaFactory schemaFactory;
 	private Schema schema;
 	
-	public ObjectManager() {
-		
-	}
+	public ObjectManager() {}
 	
 	public ObjectManager(URL urlSchema) {
 		
@@ -72,6 +68,10 @@ public class ObjectManager<T> {
 	
 	public T readFromDB(String docId) {
 		return dbManager.readFromDB(docId, schema);
+	}
+	
+	public void deleteFromDB(String docId) {
+		dbManager.deleteFromDB(docId);
 	}
 
 }

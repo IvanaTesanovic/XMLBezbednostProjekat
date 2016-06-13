@@ -8,7 +8,7 @@
 	</definition>
 	
 	<definition name="first" extends="appLayout">
-		<put-attribute name="title" value="login.title" />
+		<put-attribute name="title" value="login.welcome" />
 		<put-attribute name="content" value="/WEB-INF/jsp/content/first.jsp" />
 	</definition>
 	

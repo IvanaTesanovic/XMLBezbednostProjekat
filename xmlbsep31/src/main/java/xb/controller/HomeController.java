@@ -1,16 +1,17 @@
 package xb.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 @RequestMapping("/home")
 public class HomeController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String get() {
-		return "home";
+	public ModelAndView get() {
+		return new ModelAndView("home");
 	}
 
 }

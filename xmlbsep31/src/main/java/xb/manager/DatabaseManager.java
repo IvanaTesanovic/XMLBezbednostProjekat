@@ -114,4 +114,8 @@ public class DatabaseManager<T> {
 		return object;
 	}
 	
+	public void deleteFromDB(String docId) {
+		xmlDocManager.delete(docId);
+	}
+	
 }

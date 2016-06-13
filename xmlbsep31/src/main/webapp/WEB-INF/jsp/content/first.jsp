@@ -3,7 +3,7 @@
     <%@ include file="/WEB-INF/jsp/common/tagLibs.jsp"%>
 <html>
 <head>
-<title><fmt:message key="home.title"></fmt:message></title>
+<title></title>
 </head>
 <c:url var="action" value="/home" />
 <body>
