@@ -28,7 +28,7 @@ import xb.signing.SignEnveloped;
 public class FirstController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String get() {
+	public ModelAndView get() {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 //		
@@ -56,12 +56,10 @@ public class FirstController {
 		zak.setNaziv("zakon" + id);
 		
 		//zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
+		//boolean bla = zakon.verifySignature("9008714704406531439.xml");
 		
-		SignEnveloped sign = new SignEnveloped();
-		sign.sign();
-		
-		//return new ModelAndView("first");
-		return FirstController.class.getClassLoader().getResource("cfg").toString();
+		//return String.valueOf(bla);
+		return new ModelAndView("first");
 	}
 
 }

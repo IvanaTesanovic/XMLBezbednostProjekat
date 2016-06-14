@@ -62,20 +62,20 @@ public class SignEnveloped {
         org.apache.xml.security.Init.init();
     }
 	
-	public String sign() {
-		Document signedDoc;
-		Document doc = loadDocument(getXmlFile());
-		PrivateKey pk = readPrivateKey();
-		Certificate cert = readCertificate();
-		signedDoc = signDocument(doc, pk, cert);
-		saveDocument(signedDoc, OUT_FILE);
-		return OUT_FILE;
-	}
+//	public String sign(String xmlPath) {
+//		Document signedDoc;
+//		//Document doc = loadDocument(getXmlFile());
+//		PrivateKey pk = readPrivateKey();
+//		Certificate cert = readCertificate();
+//		signedDoc = signDocument(doc, pk, cert);
+//		saveDocument(signedDoc, OUT_FILE);
+//		return OUT_FILE;
+//	}
 	
 	/**
 	 * Kreira DOM od XML dokumenta
 	 */
-	private Document loadDocument(InputStream file) {
+	public Document loadDocument(InputStream file) {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(true);
@@ -101,7 +101,7 @@ public class SignEnveloped {
 	/**
 	 * Snima DOM u XML fajl 
 	 */
-	private void saveDocument(Document doc, String fileName) {
+	public void saveDocument(Document doc, String fileName) {
 		try {
 			File outFile = new File(fileName);
 			FileOutputStream f = new FileOutputStream(outFile);
@@ -137,7 +137,7 @@ public class SignEnveloped {
 	 * Ucitava sertifikat is KS fajla
 	 * alias primer
 	 */
-	private Certificate readCertificate() {
+	public Certificate readCertificate() {
 		try {
 			//kreiramo instancu KeyStore
 			KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -177,8 +177,9 @@ public class SignEnveloped {
 	/**
 	 * Ucitava privatni kljuc is KS fajla
 	 * alias primer
+	 * MORA SE IZMENITI DA UZIMA JKS ONOG KOJI JE ULOGOVAN
 	 */
-	private PrivateKey readPrivateKey() {
+	public PrivateKey readPrivateKey() {
 		try {
 			//kreiramo instancu KeyStore
 			KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -217,7 +218,7 @@ public class SignEnveloped {
 		} 
 	}
 	
-	private Document signDocument(Document doc, PrivateKey privateKey, Certificate cert) {
+	public Document signDocument(Document doc, PrivateKey privateKey, Certificate cert) {
         
         try {
 			Element rootEl = doc.getDocumentElement();

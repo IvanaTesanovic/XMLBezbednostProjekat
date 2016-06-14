@@ -76,11 +76,15 @@ public class ObjectManager<T> {
 	}
 	
 	public T readFromDB(String docId) {
-		return dbManager.readFromDB(docId, schema);
+		return dbManager.readObjectFromDB(docId, schema);
 	}
 	
 	public void deleteFromDB(String docId) {
 		dbManager.deleteFromDB(docId);
+	}
+	
+	public boolean verifySignature(String docId) {
+		return dbManager.verifySignature(docId, schema);
 	}
 
 }

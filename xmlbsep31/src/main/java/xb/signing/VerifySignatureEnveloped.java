@@ -23,13 +23,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-//Vrsi proveru potpisa
+/**
+ * Klasa koja obavlja proveru potpisa XML fajla ucitanog iz baze.
+ * @author Ivana
+ *
+ */
 public class VerifySignatureEnveloped {
 	
 	private static final String IN_FILE = "./data/univerzitet_signed1.xml";
 	
     static {
-    	//staticka inicijalizacija
         Security.addProvider(new BouncyCastleProvider());
         org.apache.xml.security.Init.init();
     }
@@ -45,7 +48,7 @@ public class VerifySignatureEnveloped {
 	/**
 	 * Kreira DOM od XML dokumenta
 	 */
-	private Document loadDocument(String file) {
+	public Document loadDocument(String file) {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(true);
@@ -68,7 +71,7 @@ public class VerifySignatureEnveloped {
 		}
 	}
 	
-	private boolean verifySignature(Document doc) {
+	public boolean verifySignature(Document doc) {
 		
 		try {
 			//Pronalazi se prvi Signature element 
@@ -109,9 +112,4 @@ public class VerifySignatureEnveloped {
 		}
 	}
 	
-	public static void main(String[] args) {
-		VerifySignatureEnveloped verify = new VerifySignatureEnveloped();
-		verify.testIt();
-	}
-
 }

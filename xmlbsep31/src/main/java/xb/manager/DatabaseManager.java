@@ -3,6 +3,9 @@ package xb.manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.security.PrivateKey;
+import java.security.cert.Certificate;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -23,6 +26,7 @@ import com.marklogic.client.io.InputStreamHandle;
 
 import xb.conversion.JaxbXMLConverter;
 import xb.signing.SignEnveloped;
+import xb.signing.VerifySignatureEnveloped;
 
 /**
  * Sadrzi operacije koje se obavljaju nad bazom podataka.
@@ -79,12 +83,10 @@ public class DatabaseManager<T> {
 	 */
 	public void writeObjectToDB(T object, String docId, String collId) {
 		String outputPath = "tem.xml";
-		//nakon kreiranja temporary dokumenta, treba ga potpisati i tek onda poslati na server
-		//SignEnveloped.sign(outputPath);
 		try {
-			//File file = new File(FirstController.class.getClassLoader().getResource("Output/tempXML.xml").toURI());
 			if(converter.marshalling(outputPath, object))
-				writeXMLtoDB(outputPath, docId, collId);
+				if(signDocument(null))
+					writeXMLtoDB(outputPath, docId, collId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,7 +107,6 @@ public class DatabaseManager<T> {
 			metadata.getCollections().add(collId);
 			desc =  xmlDocManager.create(template, metadata, handle);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return desc;
@@ -119,9 +120,9 @@ public class DatabaseManager<T> {
 	public void writeObjectToDB(T object, String collId) {
 		String outputPath = "tem.xml";
 		try {
-			//File file = new File(FirstController.class.getClassLoader().getResource("Output/tempXML.xml").toURI());
 			if(converter.marshalling(outputPath, object))
-				writeXMLtoDB(outputPath, collId);
+				if(signDocument(null))
+					writeXMLtoDB(outputPath, collId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,7 +134,7 @@ public class DatabaseManager<T> {
 	 * @param xmlSchema
 	 * @return
 	 */
-	public T readFromDB(String docId, Schema xmlSchema) {
+	public T readObjectFromDB(String docId, Schema xmlSchema) {
 		T object = null;
 		File outputFile = new File("out.xml");
 		DOMHandle content = new DOMHandle();
@@ -156,8 +157,56 @@ public class DatabaseManager<T> {
 		return object;
 	}
 	
+	public boolean verifySignature(String docId, Schema xmlSchema) {
+		boolean retVal = false;
+		File outputFile = new File("out.xml");
+		DOMHandle content = new DOMHandle();
+		DocumentMetadataHandle metadata = new DocumentMetadataHandle();
+		xmlDocManager.read(docId, metadata, content);
+		Document doc = content.get();
+		Transformer transformer;
+		try {
+			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(outputFile);
+			//transformer ce sada upisati direktno u taj fal, odn. "out.xml"
+			transformer.transform(source, result);
+			//provera potpisa
+			VerifySignatureEnveloped vse = new VerifySignatureEnveloped();
+			if(vse.verifySignature(doc))
+				retVal = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retVal;
+	}
+	
 	public void deleteFromDB(String docId) {
 		xmlDocManager.delete(docId);
 	}
 	
+	public boolean signDocument(String xmlPath) {
+		boolean retVal = false;
+		Document document;
+		SignEnveloped se = new SignEnveloped();
+		
+		try {
+			if(xmlPath == null)
+				document = se.loadDocument(new FileInputStream(new File("tem.xml")));
+			else
+				document = se.loadDocument(new FileInputStream(new File(xmlPath)));
+			
+			PrivateKey pk = se.readPrivateKey();
+			Certificate cert = se.readCertificate();
+			Document signedDoc = se.signDocument(document, pk, cert);
+			se.saveDocument(signedDoc, "tem.xml");
+			retVal = true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retVal;
+	}
 }
