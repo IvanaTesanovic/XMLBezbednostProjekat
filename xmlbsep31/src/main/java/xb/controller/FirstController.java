@@ -14,6 +14,7 @@ import xb.database.Util;
 import xb.manager.DatabaseManager;
 import xb.manager.ObjectManager;
 import xb.model.Zakon;
+import xb.signing.SignEnveloped;
 
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
@@ -27,7 +28,7 @@ import xb.model.Zakon;
 public class FirstController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView get() {
+	public String get() {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 //		
@@ -46,6 +47,7 @@ public class FirstController {
 //		korisnici.writeObjectToDB(korisnicii, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
 		
 		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
+		
 		Zakon zak = new Zakon();
 		Random rand = new Random();
 		String id = String.valueOf(rand.nextInt());
@@ -53,9 +55,13 @@ public class FirstController {
 		zak.setID(id);
 		zak.setNaziv("zakon" + id);
 		
-		zakon.writeObjectToDB(zak, DatabaseConnection.AKT_DOC_ID + id + DatabaseConnection.ID_SUFFIX, DatabaseConnection.AKT_COL_ID);
+		//zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
 		
-		return new ModelAndView("first");
+		SignEnveloped sign = new SignEnveloped();
+		sign.sign();
+		
+		//return new ModelAndView("first");
+		return FirstController.class.getClassLoader().getResource("cfg").toString();
 	}
 
 }

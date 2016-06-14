@@ -44,6 +44,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import xb.controller.FirstController;
+
 
 /**
  * Klasa za potpisivanje dokumenata. Koristi se Enveloped tip.
@@ -52,18 +54,17 @@ import org.xml.sax.SAXException;
  */
 public class SignEnveloped {
 	
-	private static final String OUT_FILE = "./signed/signedDoc.xml";
+	private static final String OUT_FILE = "./signed/signed.xml";
 	//private static final InputStream stream = SignEnveloped.class.getClassLoader().getResourceAsStream("/Keystore/primer.ks");
-	public String file = getKeyStoreFile();
 	
     static {
         Security.addProvider(new BouncyCastleProvider());
         org.apache.xml.security.Init.init();
     }
 	
-	public static String sign(String xmlPath) {
+	public String sign() {
 		Document signedDoc;
-		Document doc = loadDocument(xmlPath);
+		Document doc = loadDocument(getXmlFile());
 		PrivateKey pk = readPrivateKey();
 		Certificate cert = readCertificate();
 		signedDoc = signDocument(doc, pk, cert);
@@ -74,12 +75,12 @@ public class SignEnveloped {
 	/**
 	 * Kreira DOM od XML dokumenta
 	 */
-	private static Document loadDocument(String file) {
+	private Document loadDocument(InputStream file) {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(true);
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document document = db.parse(new File(file));
+			Document document = db.parse(file);
 
 			return document;
 		} catch (FactoryConfigurationError e) {
@@ -100,7 +101,7 @@ public class SignEnveloped {
 	/**
 	 * Snima DOM u XML fajl 
 	 */
-	private static void saveDocument(Document doc, String fileName) {
+	private void saveDocument(Document doc, String fileName) {
 		try {
 			File outFile = new File(fileName);
 			FileOutputStream f = new FileOutputStream(outFile);
@@ -136,7 +137,7 @@ public class SignEnveloped {
 	 * Ucitava sertifikat is KS fajla
 	 * alias primer
 	 */
-	private static Certificate readCertificate() {
+	private Certificate readCertificate() {
 		try {
 			//kreiramo instancu KeyStore
 			KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -177,7 +178,7 @@ public class SignEnveloped {
 	 * Ucitava privatni kljuc is KS fajla
 	 * alias primer
 	 */
-	private static PrivateKey readPrivateKey() {
+	private PrivateKey readPrivateKey() {
 		try {
 			//kreiramo instancu KeyStore
 			KeyStore ks = KeyStore.getInstance("JKS", "SUN");
@@ -216,7 +217,7 @@ public class SignEnveloped {
 		} 
 	}
 	
-	private static Document signDocument(Document doc, PrivateKey privateKey, Certificate cert) {
+	private Document signDocument(Document doc, PrivateKey privateKey, Certificate cert) {
         
         try {
 			Element rootEl = doc.getDocumentElement();
@@ -262,12 +263,12 @@ public class SignEnveloped {
 		}
 	}
 	
-	public String getKeyStoreFile() {
-		return SignEnveloped.class.getClassLoader().getResource("Keystore/primer.jks").getFile();
-	}
-	
 	public static InputStream openInputStream(String name) {
 			return SignEnveloped.class.getClassLoader().getResourceAsStream("Keystore/" + name);
+	}
+	
+	public static InputStream getXmlFile() {
+		return SignEnveloped.class.getClassLoader().getResourceAsStream("Data/univerzitet.xml");
 	}
 	
 }

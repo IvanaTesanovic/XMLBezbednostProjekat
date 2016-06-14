@@ -9,6 +9,7 @@ import javax.xml.validation.SchemaFactory;
 import org.xml.sax.SAXException;
 
 import com.marklogic.client.DatabaseClient;
+import com.marklogic.client.document.DocumentDescriptor;
 import com.marklogic.client.document.XMLDocumentManager;
 
 import xb.conversion.JaxbXMLConverter;
@@ -46,7 +47,7 @@ public class ObjectManager<T> {
 	
 
 	/**
-	 * Upis XML fajla u bazu.
+	 * Upis XML fajla u bazu sa prosledjenim id-em dokumenta.
 	 * @param xmlPath
 	 * @param docId
 	 * @param collId
@@ -56,7 +57,7 @@ public class ObjectManager<T> {
 	}
 	
 	/**
-	 * Upis Jaxb objekta u bazu.
+	 * Upis Jaxb objekta u bazu sa prosledjenim id-em dokumenta.
 	 * @param object
 	 * @param docId
 	 * @param collId
@@ -64,6 +65,14 @@ public class ObjectManager<T> {
 	 */
 	public void writeObjectToDB(T object, String docId, String collId) {
 		dbManager.writeObjectToDB(object, docId, collId);
+	}
+	
+	public void writeXMLtoDB(String xmlPath, String collId) {
+		dbManager.writeXMLtoDB(xmlPath, collId);
+	}
+	
+	public void writeObjectToDB(T object, String collId) {
+		dbManager.writeObjectToDB(object, collId);
 	}
 	
 	public T readFromDB(String docId) {

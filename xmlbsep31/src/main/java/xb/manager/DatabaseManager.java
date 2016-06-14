@@ -14,6 +14,8 @@ import javax.xml.validation.SchemaFactory;
 import org.w3c.dom.Document;
 
 import com.marklogic.client.DatabaseClient;
+import com.marklogic.client.document.DocumentDescriptor;
+import com.marklogic.client.document.DocumentUriTemplate;
 import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.io.DOMHandle;
 import com.marklogic.client.io.DocumentMetadataHandle;
@@ -52,7 +54,7 @@ public class DatabaseManager<T> {
 	}
 
 	/**
-	 * Upisivanje XML fajla u bazu podataka.
+	 * Upisivanje XML fajla u bazu podataka sa id-em dokumenta.
 	 * @param xmlPath
 	 * @param docId
 	 * @param collId
@@ -69,20 +71,57 @@ public class DatabaseManager<T> {
 	}
 	
 	/**
-	 * Upisivanje Jaxb objekta u bazu podataka. Prethodi mu konverzija objekta u XML.
+	 * Upisivanje Jaxb objekta u bazu podataka sa id-em dokumenta. Prethodi mu konverzija objekta u XML.
 	 * @param object Jaxb objekat koji konvertujemo
 	 * @param docId
 	 * @param collId
 	 * @param xmlOutputPath
 	 */
-	public void writeObjectToDB(T object, String docId, String collId){
+	public void writeObjectToDB(T object, String docId, String collId) {
 		String outputPath = "tem.xml";
-		//nakon kreiranja temporary dokumenta, treba ga potpisati u tek onda poslati na server
-		SignEnveloped.sign(outputPath);
+		//nakon kreiranja temporary dokumenta, treba ga potpisati i tek onda poslati na server
+		//SignEnveloped.sign(outputPath);
 		try {
 			//File file = new File(FirstController.class.getClassLoader().getResource("Output/tempXML.xml").toURI());
 			if(converter.marshalling(outputPath, object))
 				writeXMLtoDB(outputPath, docId, collId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Upisivanje XML fajla u bazu podataka sa generisanim id-em dokumenta.
+	 * @param path
+	 * @param collId
+	 */
+	public DocumentDescriptor writeXMLtoDB(String path, String collId) {
+		InputStreamHandle handle;
+		DocumentDescriptor desc = null;
+		try {
+			handle = new InputStreamHandle(new FileInputStream(path));
+			DocumentUriTemplate template = xmlDocManager.newDocumentUriTemplate("xml");
+			DocumentMetadataHandle metadata = new DocumentMetadataHandle();
+			metadata.getCollections().add(collId);
+			desc =  xmlDocManager.create(template, metadata, handle);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return desc;
+	}
+	
+	/**
+	 * Upisivanje Jaxb objekta u bazu podataka sa generisanim id-em dokumenta. Prethodi mu konverzija objekta u XML.
+	 * @param object
+	 * @param collId
+	 */
+	public void writeObjectToDB(T object, String collId) {
+		String outputPath = "tem.xml";
+		try {
+			//File file = new File(FirstController.class.getClassLoader().getResource("Output/tempXML.xml").toURI());
+			if(converter.marshalling(outputPath, object))
+				writeXMLtoDB(outputPath, collId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

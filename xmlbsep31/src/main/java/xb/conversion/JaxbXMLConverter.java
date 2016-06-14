@@ -62,5 +62,23 @@ public class JaxbXMLConverter<T> {
 		}
 		return retVal;
 	}
+	
+	/**
+	 * Metoda koja upisuje tekstualni sadrzaj u XML fajl.
+	 * @param content sadrzaj koji treba da se upise
+	 * @return da li je uspesno izvrseno upisivanje
+	 */
+	public boolean writeStringToXML(String content) {
+		boolean retVal = false;
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("tmp.xml");
+            fileOutputStream.write(content.getBytes());
+            fileOutputStream.close();
+            retVal = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retVal;
+	}
 
 }
