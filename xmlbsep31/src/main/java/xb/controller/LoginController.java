@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
 import xb.dto.LoginUserDTO;
+import xb.dto.SearchAktDTO;
 import xb.manager.ObjectManager;
 import xb.model.Korisnici;
 import xb.model.TipKorisnik;
@@ -26,14 +27,14 @@ public class LoginController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView authenticateUser(@Valid LoginUserDTO loginUserDTO) {
-		ModelAndView m;
+		ModelAndView m = null;
 		
 		ObjectManager<Korisnici> objects = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 		Korisnici korisnici = (Korisnici)objects.readFromDB(DatabaseConnection.USERS_DOC_ID);
 		
 		for(TipKorisnik tk : korisnici.getKorisnik()) {
 			if(tk.getKorisnickoIme().equals(loginUserDTO.getUsername()) && tk.getLozinka().equals(loginUserDTO.getPassword())) {
-				m = new ModelAndView("home");
+				m = new ModelAndView("redirect:home");
 				m.addObject("loginUserDTO", new LoginUserDTO());
 				return m;
 			}
@@ -44,7 +45,6 @@ public class LoginController {
 				return m;
 			}
 		}
-		m = new ModelAndView("login");
 		return m;
 	}
 

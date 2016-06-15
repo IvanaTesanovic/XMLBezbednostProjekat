@@ -1,6 +1,8 @@
 package xb.manager;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.XMLConstants;
 import javax.xml.validation.Schema;
@@ -28,6 +30,7 @@ public class ObjectManager<T> {
 	private JaxbXMLConverter<T> converter;
 	private SchemaFactory schemaFactory;
 	private Schema schema;
+	private SearchManager searchManager;
 	
 	public ObjectManager() {}
 	
@@ -43,6 +46,7 @@ public class ObjectManager<T> {
 			e.printStackTrace();
 		}
 		dbManager = new DatabaseManager<>(client, xmlDocManager, converter, schemaFactory, schema);
+		searchManager = new SearchManager();
 	}
 	
 
@@ -71,8 +75,8 @@ public class ObjectManager<T> {
 		dbManager.writeXMLtoDB(xmlPath, collId);
 	}
 	
-	public void writeObjectToDB(T object, String collId) {
-		dbManager.writeObjectToDB(object, collId);
+	public DocumentDescriptor writeObjectToDB(T object, String collId) {
+		return dbManager.writeObjectToDB(object, collId);
 	}
 	
 	public T readFromDB(String docId) {
@@ -93,6 +97,14 @@ public class ObjectManager<T> {
 	
 	public boolean decryptDocument(String docId) {
 		return dbManager.decryptDocument(docId);
+	}
+	
+	public HashMap<String, ArrayList<String>> searchColByTagAndParam(String tag, String param, String collId) {
+		return searchManager.searchColByTagAndParam(tag, param, collId, dbManager);
+	}
+	
+	public HashMap<String, ArrayList<String>> searchColByParam(String param, String collId) {
+		return searchManager.searchColByParam(param, collId, dbManager);
 	}
 	
 

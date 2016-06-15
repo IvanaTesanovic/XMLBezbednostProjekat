@@ -5,6 +5,9 @@ import java.util.Random;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.marklogic.client.document.DocumentDescriptor;
 
 import xb.database.DatabaseConnection;
 import xb.manager.ObjectManager;
@@ -12,6 +15,8 @@ import xb.model.TipDeo;
 import xb.model.Zakon;
 import xb.model.Zakon.Deo;
 import xb.model.Zakon.Deo.Glava;
+import xb.model.Zakon.Deo.Glava.Odeljak;
+import xb.model.Zakon.Deo.Glava.Odeljak.Pododeljak;
 
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
@@ -25,7 +30,7 @@ import xb.model.Zakon.Deo.Glava;
 public class FirstController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String get() {
+	public ModelAndView get() {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 //		
@@ -52,22 +57,36 @@ public class FirstController {
 		Zakon.Deo deo = new Deo();
 		
 		Zakon.Deo.Glava glava = new Glava();
+		
+		Zakon.Deo.Glava.Odeljak.Pododeljak pododeljak = new Pododeljak();
+		pododeljak.setID("pododeljak id");
+		pododeljak.setNaziv("naziv pododeljka");
+		
+		Zakon.Deo.Glava.Odeljak odeljak = new Odeljak();
+		odeljak.setNaziv("odeljak 1");
+		odeljak.getPododeljak().add(pododeljak);
+		
 		glava.setID("smor");
 		glava.setNaziv("naziv");
+		glava.setOpis("opis glave");
+		
+		glava.getOdeljak().add(odeljak);
 		
 		deo.getGlava().add(glava);
+		
 		zak.setID(id);
 		zak.setNaziv("zakon" + id);
 		zak.getDeo().add(deo);
 		
-		//zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
+		//DocumentDescriptor desc = zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
+		//return desc.getUri();
 		//boolean bla = zakon.verifySignature("9008714704406531439.xml");
-		boolean bla = zakon.decryptDocument("6219512914215934312.xml");
-		return String.valueOf(bla);
+//		boolean bla = zakon.decryptDocument("6219512914215934312.xml");
+//		return String.valueOf(bla);
 		
 		//zakon.sendXMLtoIAGNS("5982308409546318229.xml");
 		//return "das";
-		//return new ModelAndView("first");
+		return new ModelAndView("first");
 	}
 
 }

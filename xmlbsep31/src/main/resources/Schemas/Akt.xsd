@@ -2,6 +2,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.skupstinans.rs"
     xmlns:pro="http://parlament.gov.rs/propisi" targetNamespace="http://www.skupstinans.rs"
     elementFormDefault="qualified" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+        schemaLocation="xmldsig-core-schema.xsd"/>
     <xs:attribute name="Naziv" type="xs:string"/>
     <xs:attribute name="Opis" type="xs:string"/>
     <xs:element name="Zakon">

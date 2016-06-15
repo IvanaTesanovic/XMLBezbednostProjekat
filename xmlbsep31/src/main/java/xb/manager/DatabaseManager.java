@@ -9,7 +9,6 @@ import java.security.cert.Certificate;
 import javax.crypto.SecretKey;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -25,6 +24,9 @@ import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.io.DOMHandle;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.InputStreamHandle;
+import com.marklogic.client.io.SearchHandle;
+import com.marklogic.client.query.MatchDocumentSummary;
+import com.marklogic.client.query.StringQueryDefinition;
 
 import xb.conversion.JaxbXMLConverter;
 import xb.database.DatabaseConnection;
@@ -137,15 +139,17 @@ public class DatabaseManager<T> {
 	 * @param object
 	 * @param collId
 	 */
-	public void writeObjectToDB(T object, String collId) {
+	public DocumentDescriptor writeObjectToDB(T object, String collId) {
 		String outputPath = "tem.xml";
+		DocumentDescriptor desc = null;
 		try {
 			if(converter.marshalling(outputPath, object))
-				if(signDocument(null))
-					writeXMLtoDB(outputPath, collId);
+				//if(signDocument(null))
+					return writeXMLtoDB(outputPath, collId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return desc;
 	}
 	
 	/**
@@ -292,6 +296,11 @@ public class DatabaseManager<T> {
 		}
 	}
 	
+	/**
+	 * Metoda koja obezbedjuje dekripciju dokumenta iz baze podataka.
+	 * @param docId
+	 * @return
+	 */
 	public boolean decryptDocument(String docId) {
 		boolean retVal = false;
 		DecryptKEK dec = new DecryptKEK();
@@ -318,4 +327,21 @@ public class DatabaseManager<T> {
 		}
 		return retVal;
 	}
+	
+	/**
+	 * Metoda koja pretrazuje kolekciju za zadati parametar.
+	 * @param param
+	 * @param collId
+	 * @return
+	 */
+	public MatchDocumentSummary[] searchColByParam(String param, String collId) {
+
+        com.marklogic.client.query.QueryManager queryManager = client.newQueryManager();
+        StringQueryDefinition queryDefinition = queryManager.newStringDefinition();
+        queryDefinition.setCriteria(param);
+        queryDefinition.setCollections(collId);
+        SearchHandle results = queryManager.search(queryDefinition, new SearchHandle());
+        MatchDocumentSummary matches[] = results.getMatchResults();
+        return matches;
+    }
 }
