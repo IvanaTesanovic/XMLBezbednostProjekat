@@ -5,14 +5,14 @@
 <html>
 <head>
 <style type="text/css">
-#usernameError, #passwordError, #error {
+#error {
 	color: red;
 	font-weight: bold;
 }
 </style>
 <title><fmt:message key="login.title" /></title>
 </head>
-<body onload='document.loginForm.j_username.focus();'>
+<body onload='document.loginForm.username.focus();'>
 <c:url var="action" value="/login" />
 
 <div class="navbar navbar-light bg-faded">
@@ -26,7 +26,7 @@
 <h2><fmt:message key="login.welcome" /></h2>
 <h4><fmt:message key="login.message" /></h4>
 
-<form:form id="signupForm" action="${action}" method="post" modelAttribute="loginUserDTO">
+<form:form id="loginForm" action="${action}" method="post" modelAttribute="loginUserDTO">
 	<fieldSet> 
 		
 		<form:label path="username"><fmt:message key="login.email" /></form:label>
@@ -48,7 +48,7 @@
 	String errorString = (String) request.getAttribute("error");
 	if (errorString != null && errorString.trim().equals("true")) {
 %>
-		<div><fmt:message key="login.error"/></div>
+		<div id="error"><fmt:message key="login.error"/></div>
 <%
 	} else {
 %>
@@ -56,47 +56,5 @@
 <%
 	}
 %>
-
-<script type="text/javascript">
-		function validateForm() {
-
-			var ret = true;
-			var j_username = document.forms["loginForm"]["j_username"].value;
-			var j_password = document.forms["loginForm"]["j_password"].value;
-
-			if ($("#error"))
-				$("#error").remove();
-
-			if ($("#usernameError")) {
-				$("#usernameError").remove();
-				document.getElementById("j_username").style.borderColor = "#CCCCCC";
-			}
-
-			if ($("#passwordError")) {
-				$("#passwordError").remove();
-				document.getElementById("j_password").style.borderColor = "#CCCCCC";
-			}
-
-			if (j_username == null || j_username == "") {
-				$("#j_username")
-						.after(
-								"<td id='usernameError'> <fmt:message key='error.username.null'/> </td> ");
-				document.getElementById("j_username").style.borderColor = "red";
-				ret = false;
-			}
-
-			if (j_password == null || j_password == "") {
-				$("#j_password")
-						.after(
-								"<td id='passwordError'> <fmt:message key='error.password.null'/> </td> ");
-				document.getElementById("j_password").style.borderColor = "red";
-				ret = false;
-			}
-
-			return ret;
-		}
-	</script>
-
-
 </body>
 </html>
