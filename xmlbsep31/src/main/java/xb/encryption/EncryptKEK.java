@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -40,6 +41,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import xb.signing.SignEnveloped;
+
 //Generise tajni kljuc
 //Kriptije sadrzaj elementa student tajnim kljucem
 //Kriptuje tajni kljuc javnim kljucem
@@ -60,31 +63,57 @@ public class EncryptKEK {
      * @param doc dokument koji se enkriptuje
      * @param naziv naziv .jks fajla sertifikata
      */
-    public static Document encryptDocument(Document doc, String naziv) {
-    	//ucitavamo dokument za kriptovanje
-    	//Document doc = loadDocument(path);
-    	//generisemo tajni kljuc
-    	SecretKey secretKey = generateDataEncryptionKey();
-    	//ucitavamo sertifikat za kriptovanje
-    	Certificate cert = readCertificate(naziv);
-    	/** kriptujemo dokument **/
-    	doc = encrypt(doc, secretKey, cert);
-		//snima se tajni kljuc
-		//snima se dokument
-		//saveDocument(doc, OUT_FILE);
-    	return doc;
-    }
+//    public Document encryptDocument(Document doc, String naziv) {
+//    	//ucitavamo dokument za kriptovanje
+//    	//Document doc = loadDocument(path);
+//    	//generisemo tajni kljuc
+//    	SecretKey secretKey = generateDataEncryptionKey();
+//    	//ucitavamo sertifikat za kriptovanje
+//    	Certificate cert = readCertificate(naziv);
+//    	/** kriptujemo dokument **/
+//    	doc = encrypt(doc, secretKey, cert);
+//		//snima se tajni kljuc
+//		//snima se dokument
+//		//saveDocument(doc, OUT_FILE);
+//    	return doc;
+//    }
+    
+    /**
+	 * Kreira DOM od XML dokumenta
+	 */
+	public Document loadDocument(InputStream file) {
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			dbf.setNamespaceAware(true);
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document document = db.parse(file);
+
+			return document;
+		} catch (FactoryConfigurationError e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			return null;
+		} catch (SAXException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	/**
 	 * Ucitava sertifikat is KS fajla
 	 * alias primer (izmeniti)
 	 */
-	private static Certificate readCertificate(String naziv) {
+	public Certificate readCertificate() {
 		try {
 			//kreiramo instancu KeyStore
 			KeyStore ks = KeyStore.getInstance("JKS", "SUN");
 			//ucitavamo podatke
-			BufferedInputStream in = new BufferedInputStream(new FileInputStream(KEY_STORE_FILE + "/" + naziv + ".jks"));
+			BufferedInputStream in = new BufferedInputStream(openInputStream("primer.jks"));
 			ks.load(in, "primer".toCharArray());
 			
 			if(ks.isKeyEntry("primer")) {
@@ -118,7 +147,7 @@ public class EncryptKEK {
 	/**
 	 * Generise tajni kljuc (koristi se AES algoritam)
 	 */
-	private static SecretKey generateDataEncryptionKey() {
+	public SecretKey generateDataEncryptionKey() {
 
         try {
 			//KeyGenerator keyGenerator = KeyGenerator.getInstance("DESede"); //Triple DES
@@ -134,7 +163,7 @@ public class EncryptKEK {
 	/**
 	 * Kriptuje sadrzaj prvog elementa (uvek se sifruje sadrzaj korenskog elementa poruke!)
 	 */
-	private static Document encrypt(Document doc, SecretKey key, Certificate certificate) {
+	public Document encrypt(Document doc, SecretKey key, Certificate certificate) {
 		
 		try {
 			//cipher za kriptovanje tajnog kljuca, koristi se Javni RSA kljuc za kriptovanje
@@ -160,13 +189,18 @@ public class EncryptKEK {
 	        encryptedData.setKeyInfo(keyInfo);
 			
 			//trazi se element ciji sadrzaj se kriptuje
-			/*NodeList odseci = doc.getElementsByTagName("odsek");
-			Element odsek = (Element) odseci.item(0);*/
+			NodeList akt = doc.getElementsByTagName("ns1:Zakon");
+			Element odsek = (Element) akt.item(0);
+			if(odsek == null)
+			   {
+				akt = doc.getElementsByTagName("Zakon");
+			    odsek = (Element) akt.item(0);
+			   }
 			
 	        //uvek kriptujemo korenski element
-			Element root = (Element) doc.getChildNodes().item(0);
+			//Element root = (Element) doc.getChildNodes().item(0);
 			
-			xmlCipher.doFinal(doc, root, true); //kriptuje sa sadrzaj
+			xmlCipher.doFinal(doc, odsek, true); //kriptuje sa sadrzaj
 			
 			return doc;
 			
@@ -177,6 +211,45 @@ public class EncryptKEK {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	/**
+	 * Snima DOM u XML fajl 
+	 */
+	public void saveDocument(Document doc, String fileName) {
+		try {
+			File outFile = new File(fileName);
+			FileOutputStream f = new FileOutputStream(outFile);
+
+			TransformerFactory factory = TransformerFactory.newInstance();
+			Transformer transformer = factory.newTransformer();
+			
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(f);
+			
+			transformer.transform(source, result);
+
+			f.close();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static InputStream openInputStream(String name) {
+		return SignEnveloped.class.getClassLoader().getResourceAsStream("Keystore/" + name);
 	}
 	
 }

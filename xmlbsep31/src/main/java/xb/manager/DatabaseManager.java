@@ -6,8 +6,10 @@ import java.io.FileNotFoundException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 
+import javax.crypto.SecretKey;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -25,6 +27,9 @@ import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.InputStreamHandle;
 
 import xb.conversion.JaxbXMLConverter;
+import xb.database.DatabaseConnection;
+import xb.encryption.DecryptKEK;
+import xb.encryption.EncryptKEK;
 import xb.signing.SignEnveloped;
 import xb.signing.VerifySignatureEnveloped;
 
@@ -112,6 +117,21 @@ public class DatabaseManager<T> {
 		return desc;
 	}
 	
+	public DocumentDescriptor writeXMLtoDB(File file, String collId) {
+		InputStreamHandle handle;
+		DocumentDescriptor desc = null;
+		try {
+			handle = new InputStreamHandle(new FileInputStream(file));
+			DocumentUriTemplate template = xmlDocManager.newDocumentUriTemplate("xml");
+			DocumentMetadataHandle metadata = new DocumentMetadataHandle();
+			metadata.getCollections().add(collId);
+			desc =  xmlDocManager.create(template, metadata, handle);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return desc;
+	}
+	
 	/**
 	 * Upisivanje Jaxb objekta u bazu podataka sa generisanim id-em dokumenta. Prethodi mu konverzija objekta u XML.
 	 * @param object
@@ -157,7 +177,13 @@ public class DatabaseManager<T> {
 		return object;
 	}
 	
-	public boolean verifySignature(String docId, Schema xmlSchema) {
+	/**
+	 * Citanje fajlova iz baze koje prati provera potpisa.
+	 * @param docId
+	 * @param xmlSchema
+	 * @return da li je dokument validno potpisan
+	 */
+	public boolean verifySignature(String docId) {
 		boolean retVal = false;
 		File outputFile = new File("out.xml");
 		DOMHandle content = new DOMHandle();
@@ -183,10 +209,19 @@ public class DatabaseManager<T> {
 		return retVal;
 	}
 	
+	/**
+	 * Brisanje fajla iz baze za prosledjeni id.
+	 * @param docId
+	 */
 	public void deleteFromDB(String docId) {
 		xmlDocManager.delete(docId);
 	}
 	
+	/**
+	 * Metoda za potpisivanje XML fajlova.
+	 * @param xmlPath
+	 * @return
+	 */
 	public boolean signDocument(String xmlPath) {
 		boolean retVal = false;
 		Document document;
@@ -204,6 +239,80 @@ public class DatabaseManager<T> {
 			se.saveDocument(signedDoc, "tem.xml");
 			retVal = true;
 			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retVal;
+	}
+	
+	public Document encryptDocument(String xmlPath) {
+		boolean retVal = false;
+		Document document;
+		Document encryptedDoc = null;
+		EncryptKEK enc = new EncryptKEK();
+		
+		try {
+			if(xmlPath == null)
+				document = enc.loadDocument(new FileInputStream(new File("tem.xml")));
+			else
+				document = enc.loadDocument(new FileInputStream(new File(xmlPath)));
+			
+			SecretKey secretKey = enc.generateDataEncryptionKey();
+	    	Certificate cert = enc.readCertificate();
+	    	encryptedDoc = enc.encrypt(document, secretKey, cert);
+	    	retVal = true;
+			enc.saveDocument(encryptedDoc, "tem.xml");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return encryptedDoc;
+	}
+	
+	/**
+	 * Metoda koja salje XML fajlove iz baze podataka Istorijskom Arhivu. Pre slanja svaki dokument se enkriptuje.
+	 * @param docId
+	 */
+	public void sendToIAGNS(String docId) {
+		File outputFile = new File("tem.xml");
+		DOMHandle content = new DOMHandle();
+		DocumentMetadataHandle metadata = new DocumentMetadataHandle();
+		xmlDocManager.read(docId, metadata, content);
+		Document doc = content.get();
+		try {
+			Document bla = encryptDocument(null); 
+			Transformer transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(bla);
+			StreamResult result = new StreamResult(outputFile);
+			transformer.transform(source, result); //transformer upisuje u outputFile
+			writeXMLtoDB(outputFile, DatabaseConnection.IAGNS_COL_ID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean decryptDocument(String docId) {
+		boolean retVal = false;
+		DecryptKEK dec = new DecryptKEK();
+		PrivateKey pk = dec.readPrivateKey();
+		File outputFile = new File("out.xml");
+		DOMHandle content = new DOMHandle();
+		DocumentMetadataHandle metadata = new DocumentMetadataHandle();
+		xmlDocManager.read(docId, metadata, content);
+		Document doc = content.get();
+		Transformer transformer;
+		try {
+			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(outputFile);
+			//transformer ce sada upisati direktno u taj fal, odn. "out.xml"
+			transformer.transform(source, result);
+			//dekripcija
+			if(dec.decrypt(doc, pk))
+				retVal = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

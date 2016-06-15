@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -36,6 +37,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import xb.signing.SignEnveloped;
+
 //Dekriptuje tajni kljuc privatnim kljucem
 //Tajnim kljucem dekriptuje podatke
 public class DecryptKEK {
@@ -49,24 +52,24 @@ public class DecryptKEK {
         org.apache.xml.security.Init.init();
     }
     
-    public static Document decryptDocument(Document doc, String naziv) {
-    	//ucitava se privatni kljuc
-    	PrivateKey pk = readPrivateKey(naziv);
-    	//kriptuje se dokument
-		doc = decrypt(doc, pk);
-		return doc;
-    }
+//    public static Document decryptDocument(Document doc, String naziv) {
+//    	//ucitava se privatni kljuc
+//    	PrivateKey pk = readPrivateKey(naziv);
+//    	//kriptuje se dokument
+//		doc = decrypt(doc, pk);
+//		return doc;
+//    }
     
 	/**
 	 * Ucitava privatni kljuc is KS fajla
 	 * alias primer (izmeniti)
 	 */
-	private static PrivateKey readPrivateKey(String naziv) {
+	public PrivateKey readPrivateKey() {
 		try {
 			//kreiramo instancu KeyStore
 			KeyStore ks = KeyStore.getInstance("JKS", "SUN");
 			//ucitavamo podatke
-			BufferedInputStream in = new BufferedInputStream(new FileInputStream(KEY_STORE_FILE + "/" + naziv + ".jks"));
+			BufferedInputStream in = new BufferedInputStream(openInputStream("primer.jks"));
 			ks.load(in, "primer".toCharArray());
 			
 			if(ks.isKeyEntry("primer")) {
@@ -101,9 +104,9 @@ public class DecryptKEK {
 	}
 	
 	/**
-	 * Kriptuje sadrzaj prvog elementa odsek
+	 * Kriptuje sadrzaj prvog elementa
 	 */
-	private static Document decrypt(Document doc, PrivateKey privateKey) {
+	public boolean decrypt(Document doc, PrivateKey privateKey) {
 		
 		try {
 			//cipher za dekritpovanje XML-a
@@ -121,15 +124,19 @@ public class DecryptKEK {
 			//pri cemu se prvo dekriptuje tajni kljuc, pa onda njime podaci
 			xmlCipher.doFinal(doc, encData); 
 			
-			return doc;
+			return true;
 			
 		} catch (XMLEncryptionException e) {
 			e.printStackTrace();
-			return null;
+			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return false;
 		}
+	}
+	
+	public static InputStream openInputStream(String name) {
+		return SignEnveloped.class.getClassLoader().getResourceAsStream("Keystore/" + name);
 	}
 	
 }

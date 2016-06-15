@@ -1,20 +1,17 @@
 package xb.controller;
 
 import java.util.Random;
-import java.util.UUID;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
-import xb.database.Util;
-import xb.manager.DatabaseManager;
 import xb.manager.ObjectManager;
+import xb.model.TipDeo;
 import xb.model.Zakon;
-import xb.signing.SignEnveloped;
+import xb.model.Zakon.Deo;
+import xb.model.Zakon.Deo.Glava;
 
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
@@ -28,7 +25,7 @@ import xb.signing.SignEnveloped;
 public class FirstController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView get() {
+	public String get() {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 //		
@@ -52,14 +49,25 @@ public class FirstController {
 		Random rand = new Random();
 		String id = String.valueOf(rand.nextInt());
 		
+		Zakon.Deo deo = new Deo();
+		
+		Zakon.Deo.Glava glava = new Glava();
+		glava.setID("smor");
+		glava.setNaziv("naziv");
+		
+		deo.getGlava().add(glava);
 		zak.setID(id);
 		zak.setNaziv("zakon" + id);
+		zak.getDeo().add(deo);
 		
 		//zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
 		//boolean bla = zakon.verifySignature("9008714704406531439.xml");
+		boolean bla = zakon.decryptDocument("6219512914215934312.xml");
+		return String.valueOf(bla);
 		
-		//return String.valueOf(bla);
-		return new ModelAndView("first");
+		//zakon.sendXMLtoIAGNS("5982308409546318229.xml");
+		//return "das";
+		//return new ModelAndView("first");
 	}
 
 }

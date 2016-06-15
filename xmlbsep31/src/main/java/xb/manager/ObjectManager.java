@@ -84,7 +84,16 @@ public class ObjectManager<T> {
 	}
 	
 	public boolean verifySignature(String docId) {
-		return dbManager.verifySignature(docId, schema);
+		return dbManager.verifySignature(docId);
 	}
+	
+	public void sendXMLtoIAGNS(String docId) {
+		dbManager.sendToIAGNS(docId);
+	}
+	
+	public boolean decryptDocument(String docId) {
+		return dbManager.decryptDocument(docId);
+	}
+	
 
 }
