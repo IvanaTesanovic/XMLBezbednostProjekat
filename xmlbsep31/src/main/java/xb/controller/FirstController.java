@@ -5,10 +5,10 @@ import java.util.Random;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
 import xb.manager.ObjectManager;
-import xb.model.TipDeo;
 import xb.model.Zakon;
 import xb.model.Zakon.Deo;
 import xb.model.Zakon.Deo.Glava;
@@ -25,7 +25,7 @@ import xb.model.Zakon.Deo.Glava;
 public class FirstController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String get() {
+	public ModelAndView get() {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 //		
@@ -62,12 +62,14 @@ public class FirstController {
 		
 		//zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
 		//boolean bla = zakon.verifySignature("9008714704406531439.xml");
-		boolean bla = zakon.decryptDocument("6219512914215934312.xml");
-		return String.valueOf(bla);
+		//boolean bla = zakon.decryptDocument("6219512914215934312.xml");
+		//return String.valueOf(bla);
 		
 		//zakon.sendXMLtoIAGNS("5982308409546318229.xml");
 		//return "das";
-		//return new ModelAndView("first");
+		return new ModelAndView("first");
+	
+		
 	}
 
 }

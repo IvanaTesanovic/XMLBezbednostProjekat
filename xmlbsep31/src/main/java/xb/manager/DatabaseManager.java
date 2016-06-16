@@ -3,10 +3,15 @@ package xb.manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringReader;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 
 import javax.crypto.SecretKey;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -17,6 +22,8 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.document.DocumentDescriptor;
@@ -26,12 +33,15 @@ import com.marklogic.client.io.DOMHandle;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.InputStreamHandle;
 
+import xb.controller.DodajAmandman;
 import xb.conversion.JaxbXMLConverter;
 import xb.database.DatabaseConnection;
 import xb.encryption.DecryptKEK;
 import xb.encryption.EncryptKEK;
 import xb.signing.SignEnveloped;
 import xb.signing.VerifySignatureEnveloped;
+import xb.validation.ReflectionUtils;
+import xb.validation.XMLValidator;
 
 /**
  * Sadrzi operacije koje se obavljaju nad bazom podataka.
@@ -317,5 +327,59 @@ public class DatabaseManager<T> {
 			e.printStackTrace();
 		}
 		return retVal;
+	}
+	
+	public void validateAndSaveXMLAmandman(String xmlSource) {
+		try {
+			//Parse the given input
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(new InputSource(new StringReader(xmlSource)));
+			
+			//Write the parsed document to an xml file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			
+			File tempPredlog = new File("tempPredlog.xml");
+			StreamResult result = new StreamResult(tempPredlog);
+			transformer.transform(source, result);
+			
+			XMLValidator handler = new XMLValidator();
+			handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Akt.xsd"));
+			
+			writeXMLtoDB(tempPredlog, DatabaseConnection.AMD_COL_ID);
+			
+		} catch (Exception e) {
+			//TODO handle exception
+		}
+		
+	}
+	
+	public void validateAndSaveXMLAkt(String xmlSource) {
+		try {
+			//Parse the given input
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(new InputSource(new StringReader(xmlSource)));
+			
+			//Write the parsed document to an xml file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			
+			File tempPredlog = new File("tempPredlog.xml");
+			StreamResult result = new StreamResult(tempPredlog);
+			transformer.transform(source, result);
+			
+			XMLValidator handler = new XMLValidator();
+			handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Akt.xsd"));
+			
+			writeXMLtoDB(tempPredlog, DatabaseConnection.AKT_COL_ID);
+			
+		} catch (Exception e) {
+			//TODO handle exception
+		}
+		
 	}
 }

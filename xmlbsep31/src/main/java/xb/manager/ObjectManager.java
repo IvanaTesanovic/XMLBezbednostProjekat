@@ -95,5 +95,12 @@ public class ObjectManager<T> {
 		return dbManager.decryptDocument(docId);
 	}
 	
+	public void validateAndSaveXMLAmandman(String xmlSource) {
+		dbManager.validateAndSaveXMLAmandman(xmlSource);
+	}
+	
+	public void validateAndSaveXMLAkt(String xmlSource) {
+		dbManager.validateAndSaveXMLAkt(xmlSource);
+	}	
 
 }
