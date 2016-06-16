@@ -2,10 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.skupstinans.rs"
     xmlns:pro="http://parlament.gov.rs/propisi" targetNamespace="http://www.skupstinans.rs"
     elementFormDefault="qualified" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
-    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
-        schemaLocation="xmldsig-core-schema.xsd"/>
     <xs:attribute name="Naziv" type="xs:string"/>
-    <xs:attribute name="Opis" type="xs:string"/>
     <xs:element name="Zakon">
         <xs:complexType>
             <xs:sequence>
@@ -33,10 +30,10 @@
                                                   </xs:complexType>
                                                   </xs:element>
                                                 </xs:sequence>
+                                                <xs:attribute name="ID"/>
                                                 <xs:attribute ref="Naziv"/>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="Opis" type="xs:string"/>
                                     </xs:sequence>
                                     <xs:attribute name="ID"/>
                                     <xs:attribute ref="Naziv"/>
@@ -44,7 +41,7 @@
                             </xs:element>
                         </xs:sequence>
                         <xs:attribute name="ID"/>
-                        <xs:attribute name="RedniBroj" type="xs:string"/>
+                        <xs:attribute ref="Naziv"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
@@ -54,48 +51,79 @@
     </xs:element>
     <xs:element name="Clan" abstract="false">
         <xs:complexType mixed="true">
-            <xs:choice maxOccurs="unbounded">
-                <xs:element name="Ref"/>
-                <xs:element name="Stav">
+            <xs:choice maxOccurs="1">
+                <xs:element name="Stav" maxOccurs="unbounded">
                     <xs:complexType>
-                        <xs:choice maxOccurs="unbounded">
-                            <xs:element maxOccurs="unbounded" minOccurs="2" name="Tacka">
+                        <xs:choice maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="Tacka">
                                 <xs:complexType>
-                                    <xs:choice maxOccurs="unbounded">
-                                        <xs:element maxOccurs="unbounded" minOccurs="2"
+                                    <xs:choice maxOccurs="1">
+                                        <xs:element maxOccurs="unbounded" minOccurs="1"
                                             name="Podtacka">
                                             <xs:complexType>
-                                                <xs:choice maxOccurs="unbounded">
-                                                  <xs:element maxOccurs="unbounded" minOccurs="2"
+                                                <xs:choice maxOccurs="1">
+                                                  <xs:element maxOccurs="unbounded" minOccurs="1"
                                                   name="Alineja">
                                                   <xs:complexType>
                                                   <xs:sequence>
-                                                  <xs:element name="Tekst"/>
+                                                  <xs:element name="Tekst">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
                                                   </xs:sequence>
-                                                  <xs:attribute name="ID"/>
                                                   </xs:complexType>
                                                   </xs:element>
-                                                  <xs:element name="Tekst"/>
+                                                  </xs:sequence>
+                                                  <xs:attribute name="ID"/>
+                                                  <xs:attribute ref="Naziv"/>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="Tekst">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
                                                 </xs:choice>
                                                 <xs:attribute name="ID"/>
                                                 <xs:attribute ref="Naziv"/>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element name="Tekst"/>
+                                        <xs:element name="Tekst">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
                                     </xs:choice>
                                     <xs:attribute name="ID"/>
                                     <xs:attribute ref="Naziv"/>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="Tekst"/>
+                            <xs:element name="Tekst">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element minOccurs="0" name="Ref"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:choice>
                         <xs:attribute name="ID"/>
+                        <xs:attribute ref="Naziv"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Tekst">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="Ref"/>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:choice>
             <xs:attribute name="ID"/>
             <xs:attribute ref="Naziv"/>
-            <xs:attribute ref="Opis"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
