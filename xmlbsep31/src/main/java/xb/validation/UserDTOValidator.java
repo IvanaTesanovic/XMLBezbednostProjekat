@@ -21,12 +21,8 @@ public class UserDTOValidator implements Validator {
 		if(arg0 != null) {
 			LoginUserDTO user = (LoginUserDTO)arg0;
 			
-//			if(userService.findByUsername(user.getUsername()) != null)
-//				arg1.rejectValue("username", "error.email.exists");
-			
 			if(user.getUsername().equals(null) || user.getUsername().equals(""))
-				arg1.rejectValue("username", "error.email.null");
-			
+				arg1.rejectValue("username", "error.username.null");
 			
 			if(user.getPassword().equals(null) || user.getPassword().equals(""))
 				arg1.rejectValue("password", "error.password.null");
