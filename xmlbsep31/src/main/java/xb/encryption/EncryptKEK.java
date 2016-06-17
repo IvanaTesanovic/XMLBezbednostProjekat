@@ -189,7 +189,8 @@ public class EncryptKEK {
 	        encryptedData.setKeyInfo(keyInfo);
 			
 			//trazi se element ciji sadrzaj se kriptuje
-			NodeList akt = doc.getElementsByTagName("ns1:Zakon");
+	        //TODO ovde proveriti za ovaj ns1 sto ide uz zakon
+			NodeList akt = doc.getElementsByTagName("Zakon");
 			Element odsek = (Element) akt.item(0);
 			if(odsek == null)
 			   {

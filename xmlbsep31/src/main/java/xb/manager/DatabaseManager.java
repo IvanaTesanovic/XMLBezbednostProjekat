@@ -19,14 +19,17 @@ import org.w3c.dom.Document;
 
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.document.DocumentDescriptor;
+import com.marklogic.client.document.DocumentPatchBuilder;
 import com.marklogic.client.document.DocumentUriTemplate;
 import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.io.DOMHandle;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.InputStreamHandle;
 import com.marklogic.client.io.SearchHandle;
+import com.marklogic.client.io.marker.DocumentPatchHandle;
 import com.marklogic.client.query.MatchDocumentSummary;
 import com.marklogic.client.query.StringQueryDefinition;
+import com.marklogic.client.util.EditableNamespaceContext;
 
 import xb.conversion.JaxbXMLConverter;
 import xb.database.DatabaseConnection;
@@ -344,4 +347,37 @@ public class DatabaseManager<T> {
         MatchDocumentSummary matches[] = results.getMatchResults();
         return matches;
     }
+	
+	public void partialUpdate(String docId, String patch) {
+		// Defining namespace mappings
+		EditableNamespaceContext namespaces = new EditableNamespaceContext();
+		namespaces.put("b", "http://www.ftn.uns.ac.rs/xpath/examples");
+		namespaces.put("fn", "http://www.w3.org/2005/xpath-functions");
+		namespaces.put("ns1", "http://www.skupstinans.rs");
+				// Assigning namespaces to patch builder
+		DocumentPatchBuilder patchBuilder = xmlDocManager.newPatchBuilder();
+		patchBuilder.setNamespaces(namespaces);
+
+				// Creating an XML patch
+				/*
+						<b:book category="TEST">
+							<b:title lang=\"en\">Test book</b:title>
+							<b:author>Test Author</b:author>
+							<b:year>2016</b:year>
+							<b:price>59.99</b:price>
+						</b:book>
+				 */
+		// Defining XPath context
+		String contextXPath1 = "/b:bookstore/b:book[1]";
+		String contextXPath2 = "/b:bookstore";
+		//patchBuilder.replaceFragment(contextXPath1, patch);
+		//patchBuilder.insertFragment(contextXPath1, Position.BEFORE, patch);
+		//patchBuilder.insertFragment(contextXPath1, Position.AFTER, patch);
+		//patchBuilder.insertFragment(contextXPath2, Position.LAST_CHILD, patch);
+				
+		DocumentPatchHandle patchHandle = patchBuilder.build();
+		xmlDocManager.patch(docId, patchHandle);
+				
+		//patchBuilder.delete(contextXPath1);
+	}
 }

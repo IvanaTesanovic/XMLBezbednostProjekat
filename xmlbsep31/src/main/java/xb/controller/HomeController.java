@@ -36,8 +36,12 @@ public class HomeController {
 		
 		ObjectManager<Zakon> om = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
 		m.addObject("searchAktDTO", new SearchAktDTO());
-		String tag = /*"ns1:" +*/ searchAktDTO.getMetapodatak();
-		String param = /*"ns1:" +*/ searchAktDTO.getSadrzaj();
+		String tag = searchAktDTO.getMetapodatak();
+		String param = searchAktDTO.getSadrzaj();
+		
+//		if(tag.equals("")) {
+//			
+//		}
 		
 		HashMap<String,ArrayList<String>> akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);
     	

@@ -6,6 +6,7 @@
     <xs:element name="Zakon">
         <xs:complexType>
             <xs:sequence>
+                <xs:element minOccurs="1" name="Datum" type="xs:dateTime"/>
                 <xs:element maxOccurs="unbounded" name="Deo">
                     <xs:complexType>
                         <xs:sequence>

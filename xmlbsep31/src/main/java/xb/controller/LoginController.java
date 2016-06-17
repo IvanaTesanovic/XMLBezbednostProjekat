@@ -43,9 +43,12 @@ public class LoginController {
 			
 			for(TipKorisnik tk : korisnici.getKorisnik()) {
 				if(tk.getKorisnickoIme().equals(loginUserDTO.getUsername()) && tk.getLozinka().equals(loginUserDTO.getPassword())) {
-					m = new ModelAndView("redirect:home");
-					m.addObject("loginUserDTO", loginUserDTO);
-					return m;
+					//if(tk.getUloga().equals("test")) {
+						m = new ModelAndView("redirect:home");
+						m.addObject("loginUserDTO", loginUserDTO);
+						m.addObject("uloga", tk.getUloga());
+						return m;
+					//}
 				}
 				else {
 					m = new ModelAndView("login");

@@ -33,6 +33,8 @@ public class ObjectFactory {
 
     private final static QName _ClanRef_QNAME = new QName("http://www.skupstinans.rs", "Ref");
     private final static QName _ClanStav_QNAME = new QName("http://www.skupstinans.rs", "Stav");
+    private final static QName _TOdredbaStavTackaTekstSadrzaj_QNAME = new QName("http://www.skupstinans.rs", "Sadrzaj");
+    private final static QName _TOdredbaStavTackaTekstRef_QNAME = new QName("http://www.skupstinans.rs", "Ref");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: xb.model
@@ -154,5 +156,532 @@ public class ObjectFactory {
     public TipKorisnik createTipKorisnik() {
         return new TipKorisnik();
     }
+    
+    /**
+     * Create an instance of {@link TOdredba }
+     * 
+     */
+    public TOdredba createTOdredba() {
+        return new TOdredba();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan }
+     * 
+     */
+    public TOdredba.Clan createTOdredbaClan() {
+        return new TOdredba.Clan();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav }
+     * 
+     */
+    public TOdredba.Clan.Stav createTOdredbaClanStav() {
+        return new TOdredba.Clan.Stav();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav.Tacka }
+     * 
+     */
+    public TOdredba.Clan.Stav.Tacka createTOdredbaClanStavTacka() {
+        return new TOdredba.Clan.Stav.Tacka();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav.Tacka.Podtacka }
+     * 
+     */
+    public TOdredba.Clan.Stav.Tacka.Podtacka createTOdredbaClanStavTackaPodtacka() {
+        return new TOdredba.Clan.Stav.Tacka.Podtacka();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav.Tacka.Podtacka.Alineja }
+     * 
+     */
+    public TOdredba.Clan.Stav.Tacka.Podtacka.Alineja createTOdredbaClanStavTackaPodtackaAlineja() {
+        return new TOdredba.Clan.Stav.Tacka.Podtacka.Alineja();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav }
+     * 
+     */
+    public TOdredba.Stav createTOdredbaStav() {
+        return new TOdredba.Stav();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav.Tacka }
+     * 
+     */
+    public TOdredba.Stav.Tacka createTOdredbaStavTacka() {
+        return new TOdredba.Stav.Tacka();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav.Tacka.Podtacka }
+     * 
+     */
+    public TOdredba.Stav.Tacka.Podtacka createTOdredbaStavTackaPodtacka() {
+        return new TOdredba.Stav.Tacka.Podtacka();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav.Tacka.Podtacka.Alineja }
+     * 
+     */
+    public TOdredba.Stav.Tacka.Podtacka.Alineja createTOdredbaStavTackaPodtackaAlineja() {
+        return new TOdredba.Stav.Tacka.Podtacka.Alineja();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Tacka }
+     * 
+     */
+    public TOdredba.Tacka createTOdredbaTacka() {
+        return new TOdredba.Tacka();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Tacka.Podtacka }
+     * 
+     */
+    public TOdredba.Tacka.Podtacka createTOdredbaTackaPodtacka() {
+        return new TOdredba.Tacka.Podtacka();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Tacka.Podtacka.Alineja }
+     * 
+     */
+    public TOdredba.Tacka.Podtacka.Alineja createTOdredbaTackaPodtackaAlineja() {
+        return new TOdredba.Tacka.Podtacka.Alineja();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Podtacka }
+     * 
+     */
+    public TOdredba.Podtacka createTOdredbaPodtacka() {
+        return new TOdredba.Podtacka();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Podtacka.Alineja }
+     * 
+     */
+    public TOdredba.Podtacka.Alineja createTOdredbaPodtackaAlineja() {
+        return new TOdredba.Podtacka.Alineja();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Alineja }
+     * 
+     */
+    public TOdredba.Alineja createTOdredbaAlineja() {
+        return new TOdredba.Alineja();
+    }
+
+    /**
+     * Create an instance of {@link Amandman }
+     * 
+     */
+    public Amandman createAmandman() {
+        return new Amandman();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Tekst }
+     * 
+     */
+    public TOdredba.Clan.Tekst createTOdredbaClanTekst() {
+        return new TOdredba.Clan.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav.Tekst }
+     * 
+     */
+    public TOdredba.Clan.Stav.Tekst createTOdredbaClanStavTekst() {
+        return new TOdredba.Clan.Stav.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav.Tacka.Tekst }
+     * 
+     */
+    public TOdredba.Clan.Stav.Tacka.Tekst createTOdredbaClanStavTackaTekst() {
+        return new TOdredba.Clan.Stav.Tacka.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav.Tacka.Podtacka.Tekst }
+     * 
+     */
+    public TOdredba.Clan.Stav.Tacka.Podtacka.Tekst createTOdredbaClanStavTackaPodtackaTekst() {
+        return new TOdredba.Clan.Stav.Tacka.Podtacka.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Clan.Stav.Tacka.Podtacka.Alineja.Tekst }
+     * 
+     */
+    public TOdredba.Clan.Stav.Tacka.Podtacka.Alineja.Tekst createTOdredbaClanStavTackaPodtackaAlinejaTekst() {
+        return new TOdredba.Clan.Stav.Tacka.Podtacka.Alineja.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav.Tekst }
+     * 
+     */
+    public TOdredba.Stav.Tekst createTOdredbaStavTekst() {
+        return new TOdredba.Stav.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav.Tacka.Tekst }
+     * 
+     */
+    public TOdredba.Stav.Tacka.Tekst createTOdredbaStavTackaTekst() {
+        return new TOdredba.Stav.Tacka.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav.Tacka.Podtacka.Tekst }
+     * 
+     */
+    public TOdredba.Stav.Tacka.Podtacka.Tekst createTOdredbaStavTackaPodtackaTekst() {
+        return new TOdredba.Stav.Tacka.Podtacka.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Stav.Tacka.Podtacka.Alineja.Tekst }
+     * 
+     */
+    public TOdredba.Stav.Tacka.Podtacka.Alineja.Tekst createTOdredbaStavTackaPodtackaAlinejaTekst() {
+        return new TOdredba.Stav.Tacka.Podtacka.Alineja.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Tacka.Tekst }
+     * 
+     */
+    public TOdredba.Tacka.Tekst createTOdredbaTackaTekst() {
+        return new TOdredba.Tacka.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Tacka.Podtacka.Tekst }
+     * 
+     */
+    public TOdredba.Tacka.Podtacka.Tekst createTOdredbaTackaPodtackaTekst() {
+        return new TOdredba.Tacka.Podtacka.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Tacka.Podtacka.Alineja.Tekst }
+     * 
+     */
+    public TOdredba.Tacka.Podtacka.Alineja.Tekst createTOdredbaTackaPodtackaAlinejaTekst() {
+        return new TOdredba.Tacka.Podtacka.Alineja.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Podtacka.Tekst }
+     * 
+     */
+    public TOdredba.Podtacka.Tekst createTOdredbaPodtackaTekst() {
+        return new TOdredba.Podtacka.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Podtacka.Alineja.Tekst }
+     * 
+     */
+    public TOdredba.Podtacka.Alineja.Tekst createTOdredbaPodtackaAlinejaTekst() {
+        return new TOdredba.Podtacka.Alineja.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link TOdredba.Alineja.Tekst }
+     * 
+     */
+    public TOdredba.Alineja.Tekst createTOdredbaAlinejaTekst() {
+        return new TOdredba.Alineja.Tekst();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Stav.Tacka.Tekst.class)
+    public JAXBElement<String> createTOdredbaStavTackaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Stav.Tacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Stav.Tacka.Tekst.class)
+    public JAXBElement<Object> createTOdredbaStavTackaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Stav.Tacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Alineja.Tekst.class)
+    public JAXBElement<String> createTOdredbaAlinejaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Alineja.Tekst.class)
+    public JAXBElement<Object> createTOdredbaAlinejaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Stav.Tekst.class)
+    public JAXBElement<String> createTOdredbaStavTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Stav.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Stav.Tekst.class)
+    public JAXBElement<Object> createTOdredbaStavTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Stav.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Stav.Tacka.Podtacka.Tekst.class)
+    public JAXBElement<String> createTOdredbaStavTackaPodtackaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Stav.Tacka.Podtacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Stav.Tacka.Podtacka.Tekst.class)
+    public JAXBElement<Object> createTOdredbaStavTackaPodtackaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Stav.Tacka.Podtacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Stav.Tacka.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<String> createTOdredbaStavTackaPodtackaAlinejaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Stav.Tacka.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Stav.Tacka.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<Object> createTOdredbaStavTackaPodtackaAlinejaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Stav.Tacka.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Tacka.Tekst.class)
+    public JAXBElement<String> createTOdredbaTackaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Tacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Tacka.Tekst.class)
+    public JAXBElement<Object> createTOdredbaTackaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Tacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Tacka.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<String> createTOdredbaTackaPodtackaAlinejaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Tacka.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Tacka.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<Object> createTOdredbaTackaPodtackaAlinejaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Tacka.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Clan.Stav.Tacka.Podtacka.Tekst.class)
+    public JAXBElement<String> createTOdredbaClanStavTackaPodtackaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Clan.Stav.Tacka.Podtacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Clan.Stav.Tacka.Podtacka.Tekst.class)
+    public JAXBElement<Object> createTOdredbaClanStavTackaPodtackaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Clan.Stav.Tacka.Podtacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Clan.Stav.Tekst.class)
+    public JAXBElement<String> createTOdredbaClanStavTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Clan.Stav.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Clan.Stav.Tekst.class)
+    public JAXBElement<Object> createTOdredbaClanStavTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Clan.Stav.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Tacka.Podtacka.Tekst.class)
+    public JAXBElement<String> createTOdredbaTackaPodtackaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Tacka.Podtacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Tacka.Podtacka.Tekst.class)
+    public JAXBElement<Object> createTOdredbaTackaPodtackaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Tacka.Podtacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Clan.Stav.Tacka.Tekst.class)
+    public JAXBElement<String> createTOdredbaClanStavTackaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Clan.Stav.Tacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Clan.Stav.Tacka.Tekst.class)
+    public JAXBElement<Object> createTOdredbaClanStavTackaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Clan.Stav.Tacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Clan.Stav.Tacka.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<String> createTOdredbaClanStavTackaPodtackaAlinejaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Clan.Stav.Tacka.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Clan.Stav.Tacka.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<Object> createTOdredbaClanStavTackaPodtackaAlinejaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Clan.Stav.Tacka.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Clan.Tekst.class)
+    public JAXBElement<String> createTOdredbaClanTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Clan.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Clan.Tekst.class)
+    public JAXBElement<Object> createTOdredbaClanTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Clan.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<String> createTOdredbaPodtackaAlinejaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Podtacka.Alineja.Tekst.class)
+    public JAXBElement<Object> createTOdredbaPodtackaAlinejaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Podtacka.Alineja.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Sadrzaj", scope = TOdredba.Podtacka.Tekst.class)
+    public JAXBElement<String> createTOdredbaPodtackaTekstSadrzaj(String value) {
+        return new JAXBElement<String>(_TOdredbaStavTackaTekstSadrzaj_QNAME, String.class, TOdredba.Podtacka.Tekst.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.skupstinans.rs", name = "Ref", scope = TOdredba.Podtacka.Tekst.class)
+    public JAXBElement<Object> createTOdredbaPodtackaTekstRef(Object value) {
+        return new JAXBElement<Object>(_TOdredbaStavTackaTekstRef_QNAME, Object.class, TOdredba.Podtacka.Tekst.class, value);
+    }
+
 
 }

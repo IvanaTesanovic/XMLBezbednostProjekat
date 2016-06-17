@@ -11,6 +11,7 @@ import com.marklogic.client.document.DocumentDescriptor;
 
 import xb.database.DatabaseConnection;
 import xb.manager.ObjectManager;
+import xb.model.Clan;
 import xb.model.TipDeo;
 import xb.model.Zakon;
 import xb.model.Zakon.Deo;
@@ -58,17 +59,24 @@ public class FirstController {
 		
 		Zakon.Deo.Glava glava = new Glava();
 		
+		Clan clan = new Clan();
+		clan.setID("id clana");
+		clan.setNaziv("naziv clana");
+		
+		//clan.getta
+		
 		Zakon.Deo.Glava.Odeljak.Pododeljak pododeljak = new Pododeljak();
 		pododeljak.setID("pododeljak id");
 		pododeljak.setNaziv("naziv pododeljka");
 		
+		pododeljak.getClan().add(clan);
+		
 		Zakon.Deo.Glava.Odeljak odeljak = new Odeljak();
 		odeljak.setNaziv("odeljak 1");
-		odeljak.getPododeljak().add(pododeljak);
+		//odeljak.getPododeljak().add(pododeljak);
 		
 		glava.setID("smor");
 		glava.setNaziv("naziv");
-		glava.setOpis("opis glave");
 		
 		glava.getOdeljak().add(odeljak);
 		
@@ -78,7 +86,7 @@ public class FirstController {
 		zak.setNaziv("zakon" + id);
 		zak.getDeo().add(deo);
 		
-		//DocumentDescriptor desc = zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
+		DocumentDescriptor desc = zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
 		//return desc.getUri();
 		//boolean bla = zakon.verifySignature("9008714704406531439.xml");
 //		boolean bla = zakon.decryptDocument("6219512914215934312.xml");
