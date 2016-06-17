@@ -29,7 +29,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, params = "search")
-	public Integer searchAkt(@Valid SearchAktDTO searchAktDTO, ModelAndView m) {
+	public String searchAkt(@Valid SearchAktDTO searchAktDTO, ModelAndView m) {
 		//m = new ModelAndView("home");
 		//moram da appendujem "ns1:" pre metapodatka po kojem se pretrazuje
 		//tag (metapodatak) je naziv elementa, a parametar (sadrzaj) je ono sta trazim unuar tog elementa
@@ -43,16 +43,22 @@ public class HomeController {
 //			
 //		}
 		
-		HashMap<String,ArrayList<String>> akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);
-    	
-    	Iterator it = akati.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-        }
-		
-		return akati.size();
-		
+		ArrayList<String> results = new ArrayList<>();
+		  ArrayList<ArrayList<String>> lista = new ArrayList<>();
+		  
+		  HashMap<String, ArrayList<String>> akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);
+		     
+		  Iterator it = akati.values().iterator(); //iterator koji prolazi kroz listu lista
+		  
+		  while(it.hasNext()) {
+		   lista.add((ArrayList<String>) it.next());
+		  }
+		  
+		  for(int i = 0; i < lista.size(); i++) {
+		   ArrayList<String> jedan = lista.get(i);
+		   for(int j = 0; j < jedan.size(); j++)
+		    results.add(jedan.get(j));
+		  }
+		  return results.get(0);
 	}
-
 }

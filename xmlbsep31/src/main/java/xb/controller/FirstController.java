@@ -12,7 +12,6 @@ import com.marklogic.client.document.DocumentDescriptor;
 import xb.database.DatabaseConnection;
 import xb.manager.ObjectManager;
 import xb.model.Clan;
-import xb.model.TipDeo;
 import xb.model.Zakon;
 import xb.model.Zakon.Deo;
 import xb.model.Zakon.Deo.Glava;
@@ -86,7 +85,7 @@ public class FirstController {
 		zak.setNaziv("zakon" + id);
 		zak.getDeo().add(deo);
 		
-		DocumentDescriptor desc = zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
+		//DocumentDescriptor desc = zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
 		//return desc.getUri();
 		//boolean bla = zakon.verifySignature("9008714704406531439.xml");
 //		boolean bla = zakon.decryptDocument("6219512914215934312.xml");

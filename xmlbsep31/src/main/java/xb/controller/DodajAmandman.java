@@ -18,6 +18,7 @@ import xb.database.DatabaseConnection;
 import xb.dto.LoginUserDTO;
 import xb.dto.PredlogDTO;
 import xb.manager.ObjectManager;
+import xb.model.Amandman;
 import xb.model.Korisnici;
 import xb.model.TipKorisnik;
 import xb.model.Zakon;
@@ -45,8 +46,8 @@ public class DodajAmandman {
 	public ModelAndView authenticateUser(@Valid PredlogDTO predlogDTO) {
 		ModelAndView m;
 		
-		ObjectManager<Zakon> zakon = new ObjectManager<Zakon>(DodajAmandman.class.getClassLoader().getResource("Schemas/Amandman-novi.xsd"));
-		if (zakon.validateAndSaveXMLAmandman(predlogDTO.getText())) {
+		ObjectManager<Amandman> amandman = new ObjectManager<Amandman>(DodajAmandman.class.getClassLoader().getResource("Schemas/Amandman-novi.xsd"));
+		if (amandman.validateAndSaveXMLAmandman(predlogDTO.getText())) {
 			m = new ModelAndView("redirect:home");
 			m.addObject("predlogDTO", predlogDTO);
 		} else {

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.skupstinans.rs"
     targetNamespace="http://www.skupstinans.rs" elementFormDefault="qualified">
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+        schemaLocation="xmldsig-core-schema.xsd"/>
     <xs:element name="Korisnici">
         <xs:complexType>
             <xs:sequence maxOccurs="unbounded" minOccurs="0">

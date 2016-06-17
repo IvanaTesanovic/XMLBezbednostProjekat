@@ -29,7 +29,7 @@
 <form:form id="loginForm" action="${action}" method="post" modelAttribute="loginUserDTO">
 	<fieldSet> 
 		
-		<form:label path="username"><fmt:message key="login.email" /></form:label>
+		<form:label path="username"><fmt:message key="login.username" /></form:label>
 		<form:input path="username" cssErrorClass="error" /><form:errors path="username" cssClass="errorMessage" /><br />
 		
 		<form:label path="password"><fmt:message key="login.password" /></form:label>
@@ -39,7 +39,7 @@
 	
 	<div class="signup">
 		<button type="submit" name="save" class="button">
-			<fmt:message key="signup.title" />
+			<fmt:message key="login.title" />
 		</button>
 	</div>
 	
