@@ -10,10 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
 import xb.dto.LoginUserDTO;
-import xb.dto.SearchAktDTO;
 import xb.manager.ObjectManager;
 import xb.model.Korisnici;
 import xb.model.TipKorisnik;
+import xb.password.PasswordEncoder;
 import xb.validation.UserDTOValidator;
 
 @RestController
@@ -41,8 +41,8 @@ public class LoginController {
 			ObjectManager<Korisnici> objects = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 			Korisnici korisnici = (Korisnici)objects.readFromDB(DatabaseConnection.USERS_DOC_ID);
 			
-			for(TipKorisnik tk : korisnici.getKorisnik()) {
-				if(tk.getKorisnickoIme().equals(loginUserDTO.getUsername()) && tk.getLozinka().equals(loginUserDTO.getPassword())) {
+			for(TipKorisnik tk : korisnici.getListaKorisnika()) {
+				if(tk.getKorisnickoIme().equals(loginUserDTO.getUsername()) && tk.getLozinka().equals(PasswordEncoder.getEncodedPassword(loginUserDTO.getPassword(), loginUserDTO.getUsername()))) {
 					//if(tk.getUloga().equals("test")) {
 						m = new ModelAndView("redirect:home");
 						m.addObject("loginUserDTO", loginUserDTO);
