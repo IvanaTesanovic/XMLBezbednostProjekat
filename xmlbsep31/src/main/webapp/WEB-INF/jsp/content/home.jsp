@@ -41,5 +41,7 @@
 	</form:form>
 </div>
 
+${size }
+
 </body>
 </html>

@@ -29,8 +29,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, params = "search")
-	public String searchAkt(@Valid SearchAktDTO searchAktDTO, ModelAndView m) {
-		//m = new ModelAndView("home");
+	public ModelAndView searchAkt(@Valid SearchAktDTO searchAktDTO) {
+		ModelAndView m = new ModelAndView("home");
 		//moram da appendujem "ns1:" pre metapodatka po kojem se pretrazuje
 		//tag (metapodatak) je naziv elementa, a parametar (sadrzaj) je ono sta trazim unuar tog elementa
 		
@@ -60,6 +60,9 @@ public class HomeController {
 		   for(int j = 0; j < jedan.size(); j++)
 		    results.add(jedan.get(j));
 		  }
-		  return results.get(0);
+
+		  m.addObject("size", results.size());
+		  return m;
+		  
 	}
 }

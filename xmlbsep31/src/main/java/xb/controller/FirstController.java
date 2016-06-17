@@ -36,7 +36,7 @@ public class FirstController {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
 //		
-//		Korisnici korisnicii = new Korisnici();
+//		Korisnici korisnicii = (Korisnici)korisnici.readFromDB(DatabaseConnection.USERS_DOC_ID);
 //		
 //		TipKorisnik korisnik = new TipKorisnik();
 //		korisnik.setEmail("test@test");
@@ -47,45 +47,45 @@ public class FirstController {
 //		korisnik.setUloga("test");
 //		
 //		korisnicii.getKorisnik().add(korisnik);
+//		korisnici.generateKeyStore(korisnik);
+//		korisnici.writeObjectToDB(korisnicii, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID, false);
+		
+//		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
 //		
-//		korisnici.writeObjectToDB(korisnicii, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
-		
-		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
-		
-		Zakon zak = new Zakon();
-		Random rand = new Random();
-		String id = String.valueOf(rand.nextInt());
-		
-		Zakon.Deo deo = new Deo();
-		
-		Zakon.Deo.Glava glava = new Glava();
-		
-		Clan clan = new Clan();
-		clan.setID("id clana");
-		clan.setNaziv("naziv clana");
-		
-		//clan.getta
-		
-		Zakon.Deo.Glava.Odeljak.Pododeljak pododeljak = new Pododeljak();
-		pododeljak.setID("pododeljak id");
-		pododeljak.setNaziv("naziv pododeljka");
-		
-		pododeljak.getClan().add(clan);
-		
-		Zakon.Deo.Glava.Odeljak odeljak = new Odeljak();
-		odeljak.setNaziv("odeljak 1");
-		//odeljak.getPododeljak().add(pododeljak);
-		
-		glava.setID("smor");
-		glava.setNaziv("naziv");
-		
-		glava.getOdeljak().add(odeljak);
-		
-		deo.getGlava().add(glava);
-		
-		zak.setID(id);
-		zak.setNaziv("zakon" + id);
-		zak.getDeo().add(deo);
+//		Zakon zak = new Zakon();
+//		Random rand = new Random();
+//		String id = String.valueOf(rand.nextInt());
+//		
+//		Zakon.Deo deo = new Deo();
+//		
+//		Zakon.Deo.Glava glava = new Glava();
+//		
+//		Clan clan = new Clan();
+//		clan.setID("id clana");
+//		clan.setNaziv("naziv clana");
+//		
+//		//clan.getta
+//		
+//		Zakon.Deo.Glava.Odeljak.Pododeljak pododeljak = new Pododeljak();
+//		pododeljak.setID("pododeljak id");
+//		pododeljak.setNaziv("naziv pododeljka");
+//		
+//		pododeljak.getClan().add(clan);
+//		
+//		Zakon.Deo.Glava.Odeljak odeljak = new Odeljak();
+//		odeljak.setNaziv("odeljak 1");
+//		//odeljak.getPododeljak().add(pododeljak);
+//		
+//		glava.setID("smor");
+//		glava.setNaziv("naziv");
+//		
+//		glava.getOdeljak().add(odeljak);
+//		
+//		deo.getGlava().add(glava);
+//		
+//		zak.setID(id);
+//		zak.setNaziv("zakon" + id);
+//		zak.getDeo().add(deo);
 		
 		//DocumentDescriptor desc = zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
 		//return desc.getUri();

@@ -45,11 +45,14 @@ import com.marklogic.client.query.MatchDocumentSummary;
 import com.marklogic.client.query.StringQueryDefinition;
 import com.marklogic.client.util.EditableNamespaceContext;
 
+import xb.certificate.CertificateGenerator;
+import xb.certificate.KeyStoreWriter;
 import xb.controller.DodajAmandmanController;
 import xb.conversion.JaxbXMLConverter;
 import xb.database.DatabaseConnection;
 import xb.encryption.DecryptKEK;
 import xb.encryption.EncryptKEK;
+import xb.model.TipKorisnik;
 import xb.signing.SignEnveloped;
 import xb.signing.VerifySignatureEnveloped;
 import xb.validation.ReflectionUtils;
@@ -552,8 +555,56 @@ public class DatabaseManager<T> {
 			}
 			else if(resenje.equals("Dodavanje")) {
 				
+				String[] odredbe = putanja.split("-");
+				
+				if(odredbe.length == 2) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Stav");
+					String name = docElem.item(0).getFirstChild().getNodeName();
+					if(sadrzaj.startsWith("<"))
+						docElem.item(Integer.parseInt(odredbe[1].substring(4))).setTextContent(sadrzaj);
+					else
+						docElem.item(Integer.parseInt(odredbe[1].substring(4))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+				else if(odredbe.length == 3) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Tacka");
+					if(sadrzaj.startsWith("<"))
+						docElem.item(Integer.parseInt(odredbe[2].substring(5))).setTextContent(sadrzaj);
+					else
+						docElem.item(Integer.parseInt(odredbe[2].substring(5))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+				else if(odredbe.length == 4) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Podtacka");
+					if(sadrzaj.startsWith("<"))
+						docElem.item(Integer.parseInt(odredbe[3].substring(8))).setTextContent(sadrzaj);
+					else
+						docElem.item(Integer.parseInt(odredbe[3].substring(8))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+				else if(odredbe.length == 5) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Alineja");
+					docElem.item(Integer.parseInt(odredbe[4].substring(7))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+				
 			}
 			else if(resenje.equals("Brisanje")) {
+				
+				String[] odredbe = putanja.split("-");
+				
+				if(odredbe.length == 2) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Stav");
+					docFile.removeChild(docElem.item(Integer.parseInt(odredbe[1].substring(4))));
+				}
+				else if(odredbe.length == 3) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Tacka");
+					docFile.removeChild(docElem.item(Integer.parseInt(odredbe[2].substring(5))));
+				}
+				else if(odredbe.length == 4) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Podtacka");
+					docFile.removeChild(docElem.item(Integer.parseInt(odredbe[3].substring(8))));
+				}
+				else if(odredbe.length == 5) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Alineja");
+					docFile.removeChild(docElem.item(Integer.parseInt(odredbe[4].substring(7))));
+				}
 				
 			}
 			
@@ -574,5 +625,10 @@ public class DatabaseManager<T> {
 			e.printStackTrace();
 		}
 		return retVal;
+	}
+	
+	public void generateKeyStore(TipKorisnik korisnik) {
+		KeyStoreWriter ksw = new KeyStoreWriter();
+		ksw.generateKeyStore(korisnik);
 	}
 }

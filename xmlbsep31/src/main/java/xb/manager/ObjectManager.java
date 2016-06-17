@@ -16,6 +16,7 @@ import com.marklogic.client.document.XMLDocumentManager;
 
 import xb.conversion.JaxbXMLConverter;
 import xb.database.DatabaseConnection;
+import xb.model.TipKorisnik;
 
 /**
  * Ovde se pozivaju metode iz DatabaseManager-a za izvrsavanje operacija nad objektima u bazi.
@@ -123,5 +124,9 @@ public class ObjectManager<T> {
 	
 	public ArrayList<T> executeQuery(String query) {
 		return queryManager.executeQuery(query);
+	}
+	
+	public void generateKeyStore(TipKorisnik korisnik) {
+		dbManager.generateKeyStore(korisnik);
 	}
 }

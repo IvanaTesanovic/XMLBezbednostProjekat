@@ -44,7 +44,7 @@ public class DodajAmandmanController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String dodajAmandman(@Valid AmandmanDTO amandmanDTO, ModelAndView m) {
+	public ModelAndView dodajAmandman(@Valid AmandmanDTO amandmanDTO) {
 //		ModelAndView m;
 //		
 //		ObjectManager<Zakon> zakon = new ObjectManager<Zakon>(DodajAmandmanController.class.getClassLoader().getResource("Schemas/Amandman-novi.xsd"));
@@ -58,7 +58,7 @@ public class DodajAmandmanController {
 //		}
 //		return m;
 		
-		//ModelAndView m = new ModelAndView("dodajAmandman");
+		ModelAndView m = new ModelAndView("redirect:home");
 		m.addObject("amandmanDTO", amandmanDTO);
 		
 		String idAkta = amandmanDTO.getIdAkta();
@@ -70,7 +70,9 @@ public class DodajAmandmanController {
 		//return amandman.partialUpdate(idAkta, sadrzaj, predlozeno);
 		
 		ObjectManager<Zakon> zakon = new ObjectManager<>(DodajAmandmanController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
-		return zakon.updateAkt(idAkta, putanja, predlozeno, sadrzaj);
+		zakon.updateAkt(idAkta, putanja, predlozeno, sadrzaj);
+		
+		return m;
 		
 	}
 }

@@ -38,10 +38,12 @@
 				<td><c:out value="${zakon.ID}"/></td>
 				<td><c:out value="${zakon.naziv}"/></td>
 				<td><c:out value="${zakon.datum}"/></td>
+				<td><a href="<c:url value="/sednica/${zakon.ID}"/>"><fmt:message key="akt.usvoji"/></a></td>
+				<td><a href="<c:url value="/spisakAkata/${zakon.ID}"/>"><fmt:message key="akt.odbij"/></a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	</div>
-
+	
 </body>
 </html>
