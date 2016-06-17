@@ -21,6 +21,7 @@ import xb.dto.SignUpUserDTO;
 import xb.manager.ObjectManager;
 import xb.model.Korisnici;
 import xb.model.TipKorisnik;
+import xb.password.PasswordEncoder;
 import xb.validation.SignUpUserDTOValidator;
 
 @RestController
@@ -37,6 +38,7 @@ public class SignUpController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView registerUser(@Valid SignUpUserDTO signUpUserDTO, BindingResult bindingResult) {
 		ModelAndView m = null;
+		Korisnici korisnici;
 		SignUpUserDTOValidator validator = new SignUpUserDTOValidator();
 		validator.validate(signUpUserDTO, bindingResult);
 		
@@ -49,23 +51,25 @@ public class SignUpController {
 			m.addObject("user", user);
 		} else {
 			ObjectManager<Korisnici> objects = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
-			Korisnici korisnici = (Korisnici)objects.readFromDB(DatabaseConnection.USERS_DOC_ID);
 			
 			TipKorisnik tk = new TipKorisnik();
 			tk.setKorisnickoIme(user.getUsername());
 			tk.setIme(user.getName());
 			tk.setPrezime(user.getLastname());
 			tk.setUloga(user.getRole());
-			tk.setLozinka(user.getPassword());
+			tk.setLozinka(PasswordEncoder.getEncodedPassword(user.getPassword(), user.getUsername()));
 			tk.setEmail(user.getEmail());
 			
-			korisnici.getKorisnik().add(tk);
-			
-			objects.writeObjectToDB(korisnici, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
+			if((korisnici = (Korisnici)objects.readFromDB(DatabaseConnection.USERS_DOC_ID)) == null) {
+				objects.writeObjectToDB(korisnici, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
+			} else {
+				korisnici.getListaKorisnika().add(tk);
+				objects.writeObjectToDB(korisnici, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
+			}
 			
 			m = new ModelAndView("redirect:login");
 			m.addObject("signUpUserDTO", signUpUserDTO);
-			m.addObject("uloga", tk.getUloga());
+			//m.addObject("uloga", tk.getUloga());
 			return m;
 		}
 		return m;

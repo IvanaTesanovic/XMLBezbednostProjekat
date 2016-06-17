@@ -12,11 +12,14 @@ import com.marklogic.client.document.DocumentDescriptor;
 import xb.database.DatabaseConnection;
 import xb.manager.ObjectManager;
 import xb.model.Clan;
+import xb.model.Korisnici;
+import xb.model.TipKorisnik;
 import xb.model.Zakon;
 import xb.model.Zakon.Deo;
 import xb.model.Zakon.Deo.Glava;
 import xb.model.Zakon.Deo.Glava.Odeljak;
 import xb.model.Zakon.Deo.Glava.Odeljak.Pododeljak;
+import xb.password.PasswordEncoder;
 
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
@@ -37,53 +40,55 @@ public class FirstController {
 //		Korisnici korisnicii = new Korisnici();
 //		
 //		TipKorisnik korisnik = new TipKorisnik();
-//		korisnik.setEmail("test@test");
-//		korisnik.setIme("jedno ime");
-//		korisnik.setPrezime("test");
-//		korisnik.setKorisnickoIme("test");
-//		korisnik.setLozinka("korisnik");
-//		korisnik.setUloga("test");
+//		korisnik.setEmail("s.m@gmail.com");
+//		korisnik.setIme("sonja");
+//		korisnik.setPrezime("mijatovic");
+//		korisnik.setKorisnickoIme("freshsonia");
+//		korisnik.setLozinka(PasswordEncoder.getEncodedPassword("maslacak", "freshsonia"));
+//		korisnik.setUloga("odbornik");
 //		
-//		korisnicii.getKorisnik().add(korisnik);
+//		korisnicii.getListaKorisnika().add(korisnik);
 //		
 //		korisnici.writeObjectToDB(korisnicii, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
 		
-		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
 		
-		Zakon zak = new Zakon();
-		Random rand = new Random();
-		String id = String.valueOf(rand.nextInt());
 		
-		Zakon.Deo deo = new Deo();
-		
-		Zakon.Deo.Glava glava = new Glava();
-		
-		Clan clan = new Clan();
-		clan.setID("id clana");
-		clan.setNaziv("naziv clana");
-		
-		//clan.getta
-		
-		Zakon.Deo.Glava.Odeljak.Pododeljak pododeljak = new Pododeljak();
-		pododeljak.setID("pododeljak id");
-		pododeljak.setNaziv("naziv pododeljka");
-		
-		pododeljak.getClan().add(clan);
-		
-		Zakon.Deo.Glava.Odeljak odeljak = new Odeljak();
-		odeljak.setNaziv("odeljak 1");
-		//odeljak.getPododeljak().add(pododeljak);
-		
-		glava.setID("smor");
-		glava.setNaziv("naziv");
-		
-		glava.getOdeljak().add(odeljak);
-		
-		deo.getGlava().add(glava);
-		
-		zak.setID(id);
-		zak.setNaziv("zakon" + id);
-		zak.getDeo().add(deo);
+//		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
+//		
+//		Zakon zak = new Zakon();
+//		Random rand = new Random();
+//		String id = String.valueOf(rand.nextInt());
+//		
+//		Zakon.Deo deo = new Deo();
+//		
+//		Zakon.Deo.Glava glava = new Glava();
+//		
+//		Clan clan = new Clan();
+//		clan.setID("id clana");
+//		clan.setNaziv("naziv clana");
+//		
+//		//clan.getta
+//		
+//		Zakon.Deo.Glava.Odeljak.Pododeljak pododeljak = new Pododeljak();
+//		pododeljak.setID("pododeljak id");
+//		pododeljak.setNaziv("naziv pododeljka");
+//		
+//		pododeljak.getClan().add(clan);
+//		
+//		Zakon.Deo.Glava.Odeljak odeljak = new Odeljak();
+//		odeljak.setNaziv("odeljak 1");
+//		//odeljak.getPododeljak().add(pododeljak);
+//		
+//		glava.setID("smor");
+//		glava.setNaziv("naziv");
+//		
+//		glava.getOdeljak().add(odeljak);
+//		
+//		deo.getGlava().add(glava);
+//		
+//		zak.setID(id);
+//		zak.setNaziv("zakon" + id);
+//		zak.getDeo().add(deo);
 		
 		//DocumentDescriptor desc = zakon.writeObjectToDB(zak, DatabaseConnection.AKT_COL_ID);
 		//return desc.getUri();
@@ -94,7 +99,7 @@ public class FirstController {
 		//zakon.sendXMLtoIAGNS("5982308409546318229.xml");
 		//return "das";
 
-		return new ModelAndView("first");
+		return new ModelAndView("redirect:home");
 
 	}
 

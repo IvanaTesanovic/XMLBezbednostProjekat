@@ -105,7 +105,7 @@ public class DatabaseManager<T> {
 		String outputPath = "tem.xml";
 		try {
 			if(converter.marshalling(outputPath, object))
-				if(signDocument(null))
+				//if(signDocument(null))
 					writeXMLtoDB(outputPath, docId, collId);
 		} catch (Exception e) {
 			e.printStackTrace();
