@@ -44,6 +44,7 @@ public class HomeController {
 //		}
 		
 		ArrayList<String> results = new ArrayList<>();
+		
 		  ArrayList<ArrayList<String>> lista = new ArrayList<>();
 		  
 		  HashMap<String, ArrayList<String>> akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);

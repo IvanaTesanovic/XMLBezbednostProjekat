@@ -61,10 +61,10 @@ public class SignUpController {
 			tk.setEmail(user.getEmail());
 			
 			if((korisnici = (Korisnici)objects.readFromDB(DatabaseConnection.USERS_DOC_ID)) == null) {
-				objects.writeObjectToDB(korisnici, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
+				objects.writeObjectToDB(korisnici, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID, false);
 			} else {
 				korisnici.getListaKorisnika().add(tk);
-				objects.writeObjectToDB(korisnici, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
+				objects.writeObjectToDB(korisnici, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID, false);
 			}
 			
 			m = new ModelAndView("redirect:login");

@@ -20,7 +20,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import xb.controller.DodajAmandman;
+import xb.controller.DodajAmandmanController;
 import xb.manager.DatabaseManager;
 
 public class ReflectionUtils {
