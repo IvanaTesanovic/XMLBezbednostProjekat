@@ -338,7 +338,7 @@ public class DatabaseManager<T> {
 		return retVal;
 	}
 	
-	public void validateAndSaveXMLAmandman(String xmlSource) {
+	public boolean validateAndSaveXMLAmandman(String xmlSource) {
 		try {
 			//Parse the given input
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -355,17 +355,18 @@ public class DatabaseManager<T> {
 			transformer.transform(source, result);
 			
 			XMLValidator handler = new XMLValidator();
-			handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Akt.xsd"));
-			
-			writeXMLtoDB(tempPredlog, DatabaseConnection.AMD_COL_ID);
+			if (handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Amandman-novi.xsd"))) {
+				writeXMLtoDB(tempPredlog, DatabaseConnection.AMD_COL_ID);
+				return true;
+			}	
 			
 		} catch (Exception e) {
 			//TODO handle exception
 		}
-		
+		return false;		
 	}
 	
-	public void validateAndSaveXMLAkt(String xmlSource) {
+	public boolean validateAndSaveXMLAkt(String xmlSource) {
 		try {
 			//Parse the given input
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -382,13 +383,15 @@ public class DatabaseManager<T> {
 			transformer.transform(source, result);
 			
 			XMLValidator handler = new XMLValidator();
-			handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Akt.xsd"));
-			
-			writeXMLtoDB(tempPredlog, DatabaseConnection.AKT_COL_ID);
+			if (handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Akt.xsd"))) {
+				writeXMLtoDB(tempPredlog, DatabaseConnection.AKT_COL_ID);
+				return true;
+			}
 			
 		} catch (Exception e) {
 			//TODO handle exception
 		}
+		return false;
 		
 	}
 	/**

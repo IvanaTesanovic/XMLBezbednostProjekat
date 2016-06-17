@@ -60,7 +60,7 @@ public class XMLValidator {
 	 * @param filePath Argument passed to main method (e.g. resources/Data/temp.xml)
 	 * @param schemaPath 
 	 */
-	public void parse(File file, URL schemaURL) {
+	public boolean parse(File file, URL schemaURL) {
 
 		try {
 			XMLStreamReader streamReader = inputFactory.createXMLStreamReader(new FileInputStream(file));
@@ -76,12 +76,9 @@ public class XMLValidator {
 					streamReader.next();
 				}
 		    }
-		} catch (XMLStreamException e) {
-		    e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		    return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			return false;
 		}
 	}
 	

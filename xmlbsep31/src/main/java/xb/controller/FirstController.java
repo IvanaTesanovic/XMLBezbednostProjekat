@@ -67,7 +67,6 @@ public class FirstController {
 		
 		glava.setID("smor");
 		glava.setNaziv("naziv");
-		glava.setOpis("opis glave");
 		
 		glava.getOdeljak().add(odeljak);
 		

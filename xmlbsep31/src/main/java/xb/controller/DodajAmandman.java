@@ -45,11 +45,15 @@ public class DodajAmandman {
 	public ModelAndView authenticateUser(@Valid PredlogDTO predlogDTO) {
 		ModelAndView m;
 		
-		ObjectManager<Zakon> zakon = new ObjectManager<Zakon>(DodajAmandman.class.getClassLoader().getResource("Schemas/Amandman.xsd"));
-		zakon.validateAndSaveXMLAmandman(predlogDTO.getText());	
-		
-		m = new ModelAndView("home");
-		m.addObject("predlogDTO", predlogDTO);
+		ObjectManager<Zakon> zakon = new ObjectManager<Zakon>(DodajAmandman.class.getClassLoader().getResource("Schemas/Amandman-novi.xsd"));
+		if (zakon.validateAndSaveXMLAmandman(predlogDTO.getText())) {
+			m = new ModelAndView("redirect:home");
+			m.addObject("predlogDTO", predlogDTO);
+		} else {
+			m = new ModelAndView("dodajAmandman");
+			m.addObject("error", "true");
+			m.addObject("predlogDTO", predlogDTO);
+		}
 		return m;
 	}
 }

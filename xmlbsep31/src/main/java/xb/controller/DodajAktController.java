@@ -46,10 +46,14 @@ public class DodajAktController {
 		ModelAndView m;
 		
 		ObjectManager<Zakon> zakon = new ObjectManager<Zakon>(DodajAktController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
-		zakon.validateAndSaveXMLAkt(predlogDTO.getText());	
-		
-		m = new ModelAndView("home");
-		m.addObject("predlogDTO", predlogDTO);
+		if (zakon.validateAndSaveXMLAkt(predlogDTO.getText())) {
+			m = new ModelAndView("redirect:home");
+			m.addObject("predlogDTO", predlogDTO);
+		} else {
+			m = new ModelAndView("dodajAkt");
+			m.addObject("error", "true");
+			m.addObject("predlogDTO", predlogDTO);
+		}
 		return m;
 	}
 }

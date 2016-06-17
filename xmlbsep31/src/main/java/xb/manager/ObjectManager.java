@@ -99,12 +99,12 @@ public class ObjectManager<T> {
 		return dbManager.decryptDocument(docId);
 	}
 	
-	public void validateAndSaveXMLAmandman(String xmlSource) {
-		dbManager.validateAndSaveXMLAmandman(xmlSource);
+	public boolean validateAndSaveXMLAmandman(String xmlSource) {
+		return dbManager.validateAndSaveXMLAmandman(xmlSource);
 	}
 	
-	public void validateAndSaveXMLAkt(String xmlSource) {
-		dbManager.validateAndSaveXMLAkt(xmlSource);
+	public boolean validateAndSaveXMLAkt(String xmlSource) {
+		return dbManager.validateAndSaveXMLAkt(xmlSource);
 	}	
 
 	public HashMap<String, ArrayList<String>> searchColByTagAndParam(String tag, String param, String collId) {

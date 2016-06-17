@@ -3,6 +3,12 @@
     <%@ include file="/WEB-INF/jsp/common/tagLibs.jsp"%>
 <html>
 <head>
+	<style type="text/css">
+	#error {
+		color: red;
+		font-weight: bold;
+	}
+	</style>
 	<title><fmt:message key="akati.dodaj" /></title>
 </head>
 <body onload='document.dodajAKtForm.focus();'>
@@ -26,7 +32,18 @@
 	<table>
 		<tr>
 			<td><form:textarea path="text" width="50em" height="25em"/></td>
-			<td><form:errors path="text" cssClass="error"/></td>
+			<%
+			String errorString = (String) request.getAttribute("error");
+			if (errorString != null && errorString.trim().equals("true")) {
+			%>
+			<td id="error"><fmt:message key="predlog.neuspesan"/></td>
+			<%
+			} else {
+			%>
+			<td> &nbsp;</td>
+			<%
+			}
+			%>
 		</tr>
 		<tr>
 			<td colspan="3"><input type="submit"/></td>
