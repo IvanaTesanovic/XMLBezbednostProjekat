@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.skupstinans.rs"
+    targetNamespace="http://www.skupstinans.rs" elementFormDefault="qualified">
+
+    <xs:complexType name="TOdredba">
+        <xs:choice>
+            <xs:element name="Alineja">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Tekst">
+                            <xs:complexType mixed="true">
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="Ref"/>
+                                    <xs:element minOccurs="1" name="Sadrzaj" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="ID"/>
+                    <xs:attribute name="Naziv"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Podtacka">
+                <xs:complexType>
+                    <xs:choice maxOccurs="1">
+                        <xs:element maxOccurs="unbounded" name="Alineja">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Tekst">
+                                        <xs:complexType mixed="true">
+                                            <xs:sequence>
+                                                <xs:element minOccurs="0" name="Ref"/>
+                                                <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="ID"/>
+                                <xs:attribute name="Naziv"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Tekst">
+                            <xs:complexType mixed="true">
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="Ref"/>
+                                    <xs:element minOccurs="1" name="Sadrzaj" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="ID"/>
+                    <xs:attribute name="Naziv"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Tacka">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element maxOccurs="unbounded" name="Podtacka">
+                            <xs:complexType>
+                                <xs:choice maxOccurs="1">
+                                    <xs:element maxOccurs="unbounded" name="Alineja">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="Tekst">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                  <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                </xs:element>
+                                            </xs:sequence>
+                                            <xs:attribute name="ID"/>
+                                            <xs:attribute name="Naziv"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="Tekst">
+                                        <xs:complexType mixed="true">
+                                            <xs:sequence>
+                                                <xs:element minOccurs="0" name="Ref"/>
+                                                <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:choice>
+                                <xs:attribute name="ID"/>
+                                <xs:attribute name="Naziv"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Tekst">
+                            <xs:complexType mixed="true">
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="Ref"/>
+                                    <xs:element minOccurs="1" name="Sadrzaj" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="ID"/>
+                    <xs:attribute name="Naziv"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Stav">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element maxOccurs="unbounded" name="Tacka">
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element maxOccurs="unbounded" name="Podtacka">
+                                        <xs:complexType>
+                                            <xs:choice maxOccurs="1">
+                                                <xs:element maxOccurs="unbounded" name="Alineja">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="Tekst">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                  <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  <xs:attribute name="ID"/>
+                                                  <xs:attribute name="Naziv"/>
+                                                  </xs:complexType>
+                                                </xs:element>
+                                                <xs:element name="Tekst">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                  <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                </xs:element>
+                                            </xs:choice>
+                                            <xs:attribute name="ID"/>
+                                            <xs:attribute name="Naziv"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="Tekst">
+                                        <xs:complexType mixed="true">
+                                            <xs:sequence>
+                                                <xs:element minOccurs="0" name="Ref"/>
+                                                <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:choice>
+                                <xs:attribute name="ID"/>
+                                <xs:attribute name="Naziv"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Tekst">
+                            <xs:complexType mixed="true">
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="Ref"/>
+                                    <xs:element minOccurs="1" name="Sadrzaj" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="ID"/>
+                    <xs:attribute name="Naziv"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Clan">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="Stav">
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element maxOccurs="unbounded" name="Tacka">
+                                        <xs:complexType>
+                                            <xs:choice>
+                                                <xs:element maxOccurs="unbounded" name="Podtacka">
+                                                  <xs:complexType>
+                                                  <xs:choice maxOccurs="1">
+                                                  <xs:element maxOccurs="unbounded" name="Alineja">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="Tekst">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                  <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  <xs:attribute name="ID"/>
+                                                  <xs:attribute name="Naziv"/>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="Tekst">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                  <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:choice>
+                                                  <xs:attribute name="ID"/>
+                                                  <xs:attribute name="Naziv"/>
+                                                  </xs:complexType>
+                                                </xs:element>
+                                                <xs:element name="Tekst">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:sequence>
+                                                  <xs:element minOccurs="0" name="Ref"/>
+                                                  <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                </xs:element>
+                                            </xs:choice>
+                                            <xs:attribute name="ID"/>
+                                            <xs:attribute name="Naziv"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="Tekst">
+                                        <xs:complexType mixed="true">
+                                            <xs:sequence>
+                                                <xs:element minOccurs="0" name="Ref"/>
+                                                <xs:element minOccurs="1" name="Sadrzaj"
+                                                  type="xs:string"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:choice>
+                                <xs:attribute name="ID"/>
+                                <xs:attribute name="Naziv"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Tekst">
+                            <xs:complexType mixed="true">
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="Ref"/>
+                                    <xs:element minOccurs="1" name="Sadrzaj" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="ID" type="xs:string"/>
+                    <xs:attribute name="Naziv" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="Amandman">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Predlozeno_resenje" type="xs:string"/>
+                <xs:element name="Sadrzaj_resenja" type="TOdredba"/>
+                <xs:element name="ID_akta" type="xs:string"/>
+                <xs:element name="ID_odredbe" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -9,12 +9,12 @@
 		font-weight: bold;
 	}
 	</style>
-	<title><fmt:message key="akati.dodaj" /></title>
+	<title><fmt:message key="amandmani.dodaj" /></title>
 </head>
-<body onload='document.dodajAKtForm.focus();'>
-<c:url var="action" value="/dodajAkt" />
+<body onload='document.dodajAmandmanForm.focus();'>
+<c:url var="action" value="/dodajAmandman" />
 
-<h2><fmt:message key="akati.dodaj" /></h2>
+<h2><fmt:message key="amandmani.dodaj" /></h2>
 
 <div class="navbar navbar-light bg-faded">
 <ul class="nav navbar-nav">
@@ -27,11 +27,11 @@
 </ul>
 </div>
 
-<form:form id="dodajAktForm" action="${action}" method="post" modelAttribute="predlogDTO">
+<form:form id="dodajAmandmanForm" action="${action}" method="post" modelAttribute="predlogDTO">
 	<form:errors path="*" cssClass="errorblock" element="div"/>
 	<table>
 		<tr>
-			<td><form:textarea path="text" width="50em" height="25em"/></td>
+			<td><form:textarea path="text" width="500em" height="250em"/></td>
 			<%
 			String errorString = (String) request.getAttribute("error");
 			if (errorString != null && errorString.trim().equals("true")) {

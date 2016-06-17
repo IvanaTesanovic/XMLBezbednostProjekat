@@ -99,6 +99,14 @@ public class ObjectManager<T> {
 		return dbManager.decryptDocument(docId);
 	}
 	
+	public boolean validateAndSaveXMLAmandman(String xmlSource) {
+		return dbManager.validateAndSaveXMLAmandman(xmlSource);
+	}
+	
+	public boolean validateAndSaveXMLAkt(String xmlSource) {
+		return dbManager.validateAndSaveXMLAkt(xmlSource);
+	}	
+
 	public HashMap<String, ArrayList<String>> searchColByTagAndParam(String tag, String param, String collId) {
 		return searchManager.searchColByTagAndParam(tag, param, collId, dbManager);
 	}
@@ -106,6 +114,4 @@ public class ObjectManager<T> {
 	public HashMap<String, ArrayList<String>> searchColByParam(String param, String collId) {
 		return searchManager.searchColByParam(param, collId, dbManager);
 	}
-	
-
 }
