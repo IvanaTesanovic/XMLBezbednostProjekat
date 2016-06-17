@@ -31,6 +31,7 @@ public class ObjectManager<T> {
 	private SchemaFactory schemaFactory;
 	private Schema schema;
 	private SearchManager searchManager;
+	private QueryManager<T> queryManager;
 	
 	public ObjectManager() {}
 	
@@ -47,6 +48,7 @@ public class ObjectManager<T> {
 		}
 		dbManager = new DatabaseManager<>(client, xmlDocManager, converter, schemaFactory, schema);
 		searchManager = new SearchManager();
+		queryManager = new QueryManager<>(client, converter, schema);
 	}
 	
 
@@ -115,11 +117,11 @@ public class ObjectManager<T> {
 		return searchManager.searchColByParam(param, collId, dbManager);
 	}
 	
-//	public String partialUpdate(String docId, String patch, String operation) {
-//		return dbManager.partialUpdate(docId, patch, operation);
-//	}
-	
 	public String updateAkt(String docId, String putanja, String resenje, String sadrzaj) {
 		return dbManager.updateAkt(docId, putanja, resenje, sadrzaj);
+	}
+	
+	public ArrayList<T> executeQuery(String query) {
+		return queryManager.executeQuery(query);
 	}
 }

@@ -9,21 +9,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
 import xb.manager.ObjectManager;
-import xb.model.Zakon;
+import xb.model.Amandman;
 import xb.query.QueryGenerator;
 
 @RestController
-@RequestMapping("/spisakAkata")
-public class SpisakAkataController {
+@RequestMapping("/spisakAmandmana")
+public class SpisakAmandmanaController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getSpisakAkata() {
-		ModelAndView m = new ModelAndView("spisakAkata");
+		ModelAndView m = new ModelAndView("spisakAmandmana");
 		
-		ObjectManager<Zakon> objects = new ObjectManager<Zakon>(SpisakAkataController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
-		ArrayList<Zakon> spisakZakona = objects.executeQuery(QueryGenerator.getFilesInColl(DatabaseConnection.AKT_COL_ID));
+		ObjectManager<Amandman> objects = new ObjectManager<Amandman>(SpisakAmandmanaController.class.getClassLoader().getResource("Schemas/Amandman.xsd"));
+		ArrayList<Amandman> spisakAman = objects.executeQuery(QueryGenerator.getFilesInColl(DatabaseConnection.AMD_COL_ID));
 		
-		m.addObject("spisakZakona", spisakZakona);
+		m.addObject("spisakAman", spisakAman);
 		return m;
 	}
 }

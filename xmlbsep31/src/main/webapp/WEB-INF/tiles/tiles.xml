@@ -52,6 +52,11 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/content/spisakAkata.jsp" />
 	</definition>
 	
+	<definition name="spisakAmandmana" extends="appLayout">
+		<put-attribute name="title" value="amandmani.title" />
+		<put-attribute name="content" value="/WEB-INF/jsp/content/spisakAmandmana.jsp" />
+	</definition>
+	
 	<definition name="sednica" extends="appLayout">
 		<put-attribute name="title" value="sednica.title" />
 		<put-attribute name="content" value="/WEB-INF/jsp/content/sednica.jsp" />

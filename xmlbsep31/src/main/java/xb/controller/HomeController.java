@@ -44,23 +44,22 @@ public class HomeController {
 //		}
 		
 		ArrayList<String> results = new ArrayList<>();
-		ArrayList<ArrayList<String>> lista = new ArrayList<>();
 		
-		HashMap<String, ArrayList<String>> akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);
-    	
-		Iterator it = akati.values().iterator(); //iterator koji prolazi kroz listu lista
-		
-		while(it.hasNext())
-			lista.add((ArrayList<String>) it.next());
-		
-		for(int i = 0; i < lista.size(); i++) {
-			ArrayList<String> jedan = lista.get(i);
-			for(int j = 0; j < jedan.size(); j++)
-				results.add(jedan.get(j));
-		}
-		
-		return results.get(0);
-		
+		  ArrayList<ArrayList<String>> lista = new ArrayList<>();
+		  
+		  HashMap<String, ArrayList<String>> akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);
+		     
+		  Iterator it = akati.values().iterator(); //iterator koji prolazi kroz listu lista
+		  
+		  while(it.hasNext()) {
+		   lista.add((ArrayList<String>) it.next());
+		  }
+		  
+		  for(int i = 0; i < lista.size(); i++) {
+		   ArrayList<String> jedan = lista.get(i);
+		   for(int j = 0; j < jedan.size(); j++)
+		    results.add(jedan.get(j));
+		  }
+		  return results.get(0);
 	}
-
 }
