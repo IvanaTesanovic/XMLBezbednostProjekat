@@ -31,6 +31,7 @@ public class ObjectManager<T> {
 	private SchemaFactory schemaFactory;
 	private Schema schema;
 	private SearchManager searchManager;
+	private QueryManager<T> queryManager;
 	
 	public ObjectManager() {}
 	
@@ -47,6 +48,7 @@ public class ObjectManager<T> {
 		}
 		dbManager = new DatabaseManager<>(client, xmlDocManager, converter, schemaFactory, schema);
 		searchManager = new SearchManager();
+		queryManager = new QueryManager<>(client, converter, schema);
 	}
 	
 
@@ -113,5 +115,9 @@ public class ObjectManager<T> {
 	
 	public HashMap<String, ArrayList<String>> searchColByParam(String param, String collId) {
 		return searchManager.searchColByParam(param, collId, dbManager);
+	}
+	
+	public ArrayList<T> executeQuery(String query) {
+		return queryManager.executeQuery(query);
 	}
 }
