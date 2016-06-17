@@ -67,16 +67,16 @@ public class ObjectManager<T> {
 	 * @param collId
 	 * @param xmlPath
 	 */
-	public void writeObjectToDB(T object, String docId, String collId) {
-		dbManager.writeObjectToDB(object, docId, collId);
+	public void writeObjectToDB(T object, String docId, String collId, boolean toSign) {
+		dbManager.writeObjectToDB(object, docId, collId, toSign);
 	}
 	
 	public void writeXMLtoDB(String xmlPath, String collId) {
 		dbManager.writeXMLtoDB(xmlPath, collId);
 	}
 	
-	public DocumentDescriptor writeObjectToDB(T object, String collId) {
-		return dbManager.writeObjectToDB(object, collId);
+	public DocumentDescriptor writeObjectToDB(T object, String collId, boolean toSign) {
+		return dbManager.writeObjectToDB(object, collId, toSign);
 	}
 	
 	public T readFromDB(String docId) {
@@ -113,5 +113,13 @@ public class ObjectManager<T> {
 	
 	public HashMap<String, ArrayList<String>> searchColByParam(String param, String collId) {
 		return searchManager.searchColByParam(param, collId, dbManager);
+	}
+	
+//	public String partialUpdate(String docId, String patch, String operation) {
+//		return dbManager.partialUpdate(docId, patch, operation);
+//	}
+	
+	public String updateAkt(String docId, String putanja, String resenje, String sadrzaj) {
+		return dbManager.updateAkt(docId, putanja, resenje, sadrzaj);
 	}
 }

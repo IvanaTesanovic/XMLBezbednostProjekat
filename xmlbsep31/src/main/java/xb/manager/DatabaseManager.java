@@ -3,6 +3,7 @@ package xb.manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.security.PrivateKey;
@@ -19,14 +20,20 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.document.DocumentDescriptor;
 import com.marklogic.client.document.DocumentPatchBuilder;
+import com.marklogic.client.document.DocumentPatchBuilder.Position;
 import com.marklogic.client.document.DocumentUriTemplate;
 import com.marklogic.client.document.XMLDocumentManager;
 import com.marklogic.client.io.DOMHandle;
@@ -38,7 +45,7 @@ import com.marklogic.client.query.MatchDocumentSummary;
 import com.marklogic.client.query.StringQueryDefinition;
 import com.marklogic.client.util.EditableNamespaceContext;
 
-import xb.controller.DodajAmandman;
+import xb.controller.DodajAmandmanController;
 import xb.conversion.JaxbXMLConverter;
 import xb.database.DatabaseConnection;
 import xb.encryption.DecryptKEK;
@@ -94,6 +101,17 @@ public class DatabaseManager<T> {
 		}
 	}
 	
+	public void writeXMLtoDB(File file, String docId, String collId) {
+		try {
+			InputStreamHandle handle = new InputStreamHandle(new FileInputStream(file));
+			DocumentMetadataHandle metadata = new DocumentMetadataHandle();
+			metadata.getCollections().add(collId);
+			xmlDocManager.write(docId, metadata, handle);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Upisivanje Jaxb objekta u bazu podataka sa id-em dokumenta. Prethodi mu konverzija objekta u XML.
 	 * @param object Jaxb objekat koji konvertujemo
@@ -101,12 +119,17 @@ public class DatabaseManager<T> {
 	 * @param collId
 	 * @param xmlOutputPath
 	 */
-	public void writeObjectToDB(T object, String docId, String collId) {
+	public void writeObjectToDB(T object, String docId, String collId, boolean toSign) {
 		String outputPath = "tem.xml";
 		try {
-			if(converter.marshalling(outputPath, object))
-				if(signDocument(null))
+			if(converter.marshalling(outputPath, object)) {
+				if(toSign) {
+					if(signDocument(null))
+						writeXMLtoDB(outputPath, docId, collId);
+				}
+				else
 					writeXMLtoDB(outputPath, docId, collId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -152,13 +175,18 @@ public class DatabaseManager<T> {
 	 * @param object
 	 * @param collId
 	 */
-	public DocumentDescriptor writeObjectToDB(T object, String collId) {
+	public DocumentDescriptor writeObjectToDB(T object, String collId, boolean toSign) {
 		String outputPath = "tem.xml";
 		DocumentDescriptor desc = null;
 		try {
-			if(converter.marshalling(outputPath, object))
-				//if(signDocument(null))
+			if(converter.marshalling(outputPath, object)) {
+				if(toSign) {
+					if(signDocument(null))
+						return writeXMLtoDB(outputPath, collId);
+				}
+				else
 					return writeXMLtoDB(outputPath, collId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -358,7 +386,7 @@ public class DatabaseManager<T> {
 			transformer.transform(source, result);
 			
 			XMLValidator handler = new XMLValidator();
-			if (handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Amandman-novi.xsd"))) {
+			if (handler.parse(tempPredlog, DodajAmandmanController.class.getClassLoader().getResource("Schemas/Amandman-novi.xsd"))) {
 				writeXMLtoDB(tempPredlog, DatabaseConnection.AMD_COL_ID);
 				return true;
 			}	
@@ -386,7 +414,7 @@ public class DatabaseManager<T> {
 			transformer.transform(source, result);
 			
 			XMLValidator handler = new XMLValidator();
-			if (handler.parse(tempPredlog, DodajAmandman.class.getClassLoader().getResource("Schemas/Akt.xsd"))) {
+			if (handler.parse(tempPredlog, DodajAmandmanController.class.getClassLoader().getResource("Schemas/Akt.xsd"))) {
 				writeXMLtoDB(tempPredlog, DatabaseConnection.AKT_COL_ID);
 				return true;
 			}
@@ -414,36 +442,137 @@ public class DatabaseManager<T> {
         return matches;
     }
 	
-	public void partialUpdate(String docId, String patch) {
-		// Defining namespace mappings
-		EditableNamespaceContext namespaces = new EditableNamespaceContext();
-		namespaces.put("b", "http://www.ftn.uns.ac.rs/xpath/examples");
-		namespaces.put("fn", "http://www.w3.org/2005/xpath-functions");
-		namespaces.put("ns1", "http://www.skupstinans.rs");
-				// Assigning namespaces to patch builder
-		DocumentPatchBuilder patchBuilder = xmlDocManager.newPatchBuilder();
-		patchBuilder.setNamespaces(namespaces);
+//	public String partialUpdate(String docId, String patch, String operation) {
+//
+//		File file = new File("file.xml");
+//        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//        
+//		try {
+//			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+//	        Document doc = docBuilder.parse(file);
+//			Node data = doc.getFirstChild();
+//			 
+//			Node startdate = doc.getElementsByTagName("Datum").item(0);
+//            return startdate.getNodeValue();
+//			 
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return "ne valja";
 
-				// Creating an XML patch
-				/*
-						<b:book category="TEST">
-							<b:title lang=\"en\">Test book</b:title>
-							<b:author>Test Author</b:author>
-							<b:year>2016</b:year>
-							<b:price>59.99</b:price>
-						</b:book>
-				 */
-		// Defining XPath context
-		String contextXPath1 = "/b:bookstore/b:book[1]";
-		String contextXPath2 = "/b:bookstore";
-		//patchBuilder.replaceFragment(contextXPath1, patch);
-		//patchBuilder.insertFragment(contextXPath1, Position.BEFORE, patch);
-		//patchBuilder.insertFragment(contextXPath1, Position.AFTER, patch);
-		//patchBuilder.insertFragment(contextXPath2, Position.LAST_CHILD, patch);
+		
+//		// Defining namespace mappings
+//		EditableNamespaceContext namespaces = new EditableNamespaceContext();
+////		namespaces.put("b", "http://www.ftn.uns.ac.rs/xpath/examples");
+////		namespaces.put("fn", "http://www.w3.org/2005/xpath-functions");
+//		//namespaces.put("s", "http://www.skupstinans.rs");
+//		// Assigning namespaces to patch builder
+//		DocumentPatchBuilder patchBuilder = xmlDocManager.newPatchBuilder();
+//		//patchBuilder.setNamespaces(namespaces);
+//
+//				// Creating an XML patch
+//				/*
+//						<b:book category="TEST">
+//							<b:title lang=\"en\">Test book</b:title>
+//							<b:author>Test Author</b:author>
+//							<b:year>2016</b:year>
+//							<b:price>59.99</b:price>
+//						</b:book>
+//				 */
+//		
+//		// Defining XPath context
+//		//String contextXPath1 = "/b:bookstore/b:book[1]";
+//		String contextXPath2 = "/Sadrzaj";
+//		
+//		if(operation.equals("Dodavanje")) {
+//			//patchBuilder.insertFragment(contextXPath1, Position.BEFORE, patch);
+//			//patchBuilder.insertFragment(contextXPath1, Position.AFTER, patch);
+//			patchBuilder.insertFragment(contextXPath2, Position.BEFORE, patch);
+//		}
+//		else if(operation.equals("Brisanje")) {
+//			//patchBuilder.delete(contextXPath1);
+//		}
+//		else if(operation.equals("Izmena")) {
+//			//patchBuilder.replaceFragment(contextXPath1, patch);
+//		}
+//		
+//		DocumentPatchHandle patchHandle = patchBuilder.build();
+//		xmlDocManager.patch(docId, patchHandle);
+		
+	//}
+	
+	public String updateAkt(String docId, String putanja, String resenje, String sadrzaj) {
+		String retVal = "ne valja";
+		File outputFile = new File("out.xml");
+		DOMHandle content = new DOMHandle();
+		DocumentMetadataHandle metadata = new DocumentMetadataHandle();
+		xmlDocManager.read(docId, metadata, content);
+		Document doc = content.get();
+		Transformer transformer;
+		try {
+			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(outputFile);
+			//transformer ce sada upisati direktno u taj fal, odn. "out.xml"
+			transformer.transform(source, result);
+			DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+			DocumentBuilder b = f.newDocumentBuilder();
+			Document docFile = b.parse(outputFile);
+			
+			if(resenje.equals("Izmena")) {
+				String[] odredbe = putanja.split("-");
 				
-		DocumentPatchHandle patchHandle = patchBuilder.build();
-		xmlDocManager.patch(docId, patchHandle);
+				if(odredbe.length == 2) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Stav");
+					if(sadrzaj.startsWith("<"))
+						docElem.item(Integer.parseInt(odredbe[1].substring(4))).setTextContent(sadrzaj);
+					else
+						docElem.item(Integer.parseInt(odredbe[1].substring(4))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+				else if(odredbe.length == 3) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Tacka");
+					if(sadrzaj.startsWith("<"))
+						docElem.item(Integer.parseInt(odredbe[2].substring(5))).setTextContent(sadrzaj);
+					else
+						docElem.item(Integer.parseInt(odredbe[2].substring(5))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+				else if(odredbe.length == 4) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Podtacka");
+					if(sadrzaj.startsWith("<"))
+						docElem.item(Integer.parseInt(odredbe[3].substring(8))).setTextContent(sadrzaj);
+					else
+						docElem.item(Integer.parseInt(odredbe[3].substring(8))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+				else if(odredbe.length == 5) {
+					NodeList docElem = docFile.getDocumentElement().getElementsByTagName("Alineja");
+					docElem.item(Integer.parseInt(odredbe[4].substring(7))).setTextContent("<Tekst><Sadrzaj>" + sadrzaj + "</Sadrzaj></Tekst>");
+				}
+			}
+			else if(resenje.equals("Dodavanje")) {
 				
-		//patchBuilder.delete(contextXPath1);
+			}
+			else if(resenje.equals("Brisanje")) {
+				
+			}
+			
+			File newFile = new File("newxml.xml");
+		    // instance of a DocumentBuilderFactory
+		    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		    DocumentBuilder db = dbf.newDocumentBuilder();
+	        // create instance of DOM
+		    Transformer tr = transformerFactory.newTransformer();
+		    tr.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.transform(new DOMSource(docFile), new StreamResult(new FileOutputStream(newFile)));
+			
+			writeXMLtoDB(newFile, docId, DatabaseConnection.USV_AKT_COL_ID);
+			retVal = "upisuje";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retVal;
 	}
 }

@@ -27,28 +27,28 @@
 </ul>
 </div>
 
-<form:form id="dodajAmandmanForm" action="${action}" method="post" modelAttribute="predlogDTO">
-	<form:errors path="*" cssClass="errorblock" element="div"/>
-	<table>
-		<tr>
-			<td><form:textarea path="text" width="500em" height="250em"/></td>
-			<%
-			String errorString = (String) request.getAttribute("error");
-			if (errorString != null && errorString.trim().equals("true")) {
-			%>
-			<td id="error"><fmt:message key="predlog.neuspesan"/></td>
-			<%
-			} else {
-			%>
-			<td> &nbsp;</td>
-			<%
-			}
-			%>
-		</tr>
-		<tr>
-			<td colspan="3"><input type="submit"/></td>
-		</tr>
-	</table>	
+<form:form id="dodajAmandmanForm" action="${action}" method="post" modelAttribute="amandmanDTO">
+	<fieldSet> 
+		
+		<form:label path="idAkta"><fmt:message key="amandmani.idakta" /></form:label>
+		<form:input path="idAkta" cssErrorClass="error" /><form:errors path="idAkta" cssClass="errorMessage" /><br />
+		
+		<form:label path="putanjaOdredbe"><fmt:message key="amandmani.putanjaodredbe" /></form:label>
+		<form:input path="putanjaOdredbe" cssErrorClass="error" /><form:errors path="putanjaOdredbe" cssClass="errorMessage" /><br />
+		
+		<form:label path="predlozenoResenje"><fmt:message key="amandmani.predlozenoresenje" /></form:label>
+		<form:input path="predlozenoResenje" cssErrorClass="error" /><form:errors path="predlozenoResenje" cssClass="errorMessage" /><br />
+		
+		<form:label path="sadrzajResenja"><fmt:message key="amandmani.sadrzajresenja" /></form:label>
+		<form:input path="sadrzajResenja" cssErrorClass="error" /><form:errors path="sadrzajResenja" cssClass="errorMessage" /><br />
+
+	</fieldSet>
+	
+	<div class="signup">
+		<button type="submit" name="save" class="button">
+			<fmt:message key="amandmani.dodaj" />
+		</button>
+	</div>
 	
 </form:form>
 
