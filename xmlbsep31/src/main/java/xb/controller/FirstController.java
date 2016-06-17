@@ -19,6 +19,7 @@ import xb.model.Zakon.Deo;
 import xb.model.Zakon.Deo.Glava;
 import xb.model.Zakon.Deo.Glava.Odeljak;
 import xb.model.Zakon.Deo.Glava.Odeljak.Pododeljak;
+import xb.password.PasswordEncoder;
 
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
@@ -39,16 +40,22 @@ public class FirstController {
 //		Korisnici korisnicii = (Korisnici)korisnici.readFromDB(DatabaseConnection.USERS_DOC_ID);
 //		
 //		TipKorisnik korisnik = new TipKorisnik();
-//		korisnik.setEmail("test@test");
-//		korisnik.setIme("jedno ime");
-//		korisnik.setPrezime("test");
-//		korisnik.setKorisnickoIme("test");
-//		korisnik.setLozinka("korisnik");
-//		korisnik.setUloga("test");
+//		korisnik.setEmail("s.m@gmail.com");
+//		korisnik.setIme("sonja");
+//		korisnik.setPrezime("mijatovic");
+//		korisnik.setKorisnickoIme("freshsonia");
+//		korisnik.setLozinka(PasswordEncoder.getEncodedPassword("maslacak", "freshsonia"));
+//		korisnik.setUloga("odbornik");
 //		
 //		korisnicii.getKorisnik().add(korisnik);
 //		korisnici.generateKeyStore(korisnik);
-//		korisnici.writeObjectToDB(korisnicii, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID, false);
+		
+//		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
+//		korisnicii.getListaKorisnika().add(korisnik);
+//		
+//		korisnici.writeObjectToDB(korisnicii, DatabaseConnection.USERS_DOC_ID, DatabaseConnection.USERS_COL_ID);
+		
+		
 		
 //		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));
 //		
@@ -96,7 +103,7 @@ public class FirstController {
 		//zakon.sendXMLtoIAGNS("5982308409546318229.xml");
 		//return "das";
 
-		return new ModelAndView("first");
+		return new ModelAndView("redirect:home");
 
 	}
 

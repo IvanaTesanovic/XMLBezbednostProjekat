@@ -68,7 +68,7 @@ public class Korisnici {
      * 
      * 
      */
-    public List<TipKorisnik> getKorisnik() {
+    public List<TipKorisnik> getListaKorisnika() {
         if (korisnik == null) {
             korisnik = new ArrayList<TipKorisnik>();
         }
