@@ -1,25 +1,9 @@
 package xb.controller;
 
-import java.util.Random;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.marklogic.client.document.DocumentDescriptor;
-
-import xb.database.DatabaseConnection;
-import xb.manager.ObjectManager;
-import xb.model.Clan;
-import xb.model.Korisnici;
-import xb.model.TipKorisnik;
-import xb.model.Zakon;
-import xb.model.Zakon.Deo;
-import xb.model.Zakon.Deo.Glava;
-import xb.model.Zakon.Deo.Glava.Odeljak;
-import xb.model.Zakon.Deo.Glava.Odeljak.Pododeljak;
-import xb.password.PasswordEncoder;
 
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
@@ -28,7 +12,7 @@ import xb.password.PasswordEncoder;
  * @author Ivana
  *
  */
-@RestController
+@Controller
 @RequestMapping("/first")
 public class FirstController {
 	

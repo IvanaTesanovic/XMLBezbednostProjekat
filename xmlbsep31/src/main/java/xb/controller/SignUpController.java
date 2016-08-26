@@ -1,22 +1,14 @@
 package xb.controller;
 
-import java.util.Calendar;
-import java.util.UUID;
-
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
-import xb.dto.LoginUserDTO;
 import xb.dto.SignUpUserDTO;
 import xb.manager.ObjectManager;
 import xb.model.Korisnici;
@@ -24,7 +16,7 @@ import xb.model.TipKorisnik;
 import xb.password.PasswordEncoder;
 import xb.validation.SignUpUserDTOValidator;
 
-@RestController
+@Controller
 @RequestMapping(value = "/signup")
 public class SignUpController {
 	

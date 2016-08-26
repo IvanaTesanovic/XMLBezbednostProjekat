@@ -19,9 +19,9 @@
 <div class="navbar navbar-light bg-faded">
 <ul class="nav navbar-nav">
 	<li class="nav-item"><a href="<c:url value="/home" />" class="nav-link"><fmt:message key="home.title" /></a></li>
-	<li class="nav-item active"><a href="<c:url value="/spisakAkata"/>" class="nav-link"> <fmt:message key="akati.spisak" /></a></li>
-	<li class="nav-item active"><a href="<c:url value="/spisakAmandmana"/>" class="nav-link"> <fmt:message key="amandmani.spisak" /></a></li>
-	<li class="nav-item"><a href="<c:url value="/dodajAkt"/>" class="nav-link"> <fmt:message key="akati.dodaj" /></a></li>
+	<li class="nav-item"><a href="<c:url value="/spisakAkata"/>" class="nav-link"> <fmt:message key="akati.spisak" /></a></li>
+	<li class="nav-item"><a href="<c:url value="/spisakAmandmana"/>" class="nav-link"> <fmt:message key="amandmani.spisak" /></a></li>
+	<li class="nav-item active"><a href="<c:url value="/dodajAkt"/>" class="nav-link"> <fmt:message key="akati.dodaj" /></a></li>
 	<li class="nav-item"><a href="<c:url value="/dodajAmandman"/>" class="nav-link"> <fmt:message key="amandmani.dodaj" /></a></li>
 	<li class="nav-item"><a href="<c:url value="j_spring_security_logout" />" class="nav-link"><fmt:message key="home.logout" /></a></li>
 </ul>

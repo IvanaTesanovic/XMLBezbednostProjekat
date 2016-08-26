@@ -1,0 +1,38 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<Zakon ID="222" ww:Naziv="Novi validan zakon" xsi:schemaLocation="http://www.skupstinans.rs file:/C:/Users/Ivana/Desktop/XML%26BSEP/xsd-ovi%20nasi/Akt.xsd" xmlns="http://www.skupstinans.rs" xmlns:ww="http://www.skupstinans.rs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Datum>2001-10-26T21:32:52
+    </Datum>
+    <Deo>
+        <Glava>
+            <Odeljak ID="0">
+                <Pododeljak ww:Naziv="Pododeljak 2123">
+                    <Clan ID="0">
+                        <Stav ID="0" ww:Naziv="Stav 0">
+                            <Tacka ID="0" ww:Naziv="Tacka 0">
+                                <Podtacka ID="0">
+                                    <Alineja ID="0" ww:Naziv="Naziv alineje">
+                                        <Tekst>
+                                            <Sadrzaj>Neki sadrzaj alineje.</Sadrzaj>
+                                        </Tekst>
+                                    </Alineja>
+                                </Podtacka>
+                            </Tacka>
+                            <Tacka ID="1">
+                                <Tekst>
+                                    <Sadrzaj>Sadrzaj druge tacke.</Sadrzaj>
+                                </Tekst>
+                            </Tacka>
+                        </Stav>
+                    </Clan>
+                    <Clan ID="1">
+                        <Stav ID="2">
+                            <Tekst>
+                                <Sadrzaj>Sadrzaj stava drugog clana prvog.</Sadrzaj>
+                            </Tekst>
+                        </Stav>
+                    </Clan>
+                </Pododeljak>
+            </Odeljak>
+        </Glava>
+    </Deo>
+</Zakon>

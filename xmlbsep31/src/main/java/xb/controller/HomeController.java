@@ -3,13 +3,12 @@ package xb.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
@@ -17,7 +16,7 @@ import xb.dto.SearchAktDTO;
 import xb.manager.ObjectManager;
 import xb.model.Zakon;
 
-@RestController
+@Controller
 @RequestMapping("/home")
 public class HomeController {
 	
@@ -39,15 +38,16 @@ public class HomeController {
 		String tag = searchAktDTO.getMetapodatak();
 		String param = searchAktDTO.getSadrzaj();
 		
-//		if(tag.equals("")) {
-//			
-//		}
+		HashMap<String, ArrayList<String>> akati = null;
+		
+		if(tag.equals(""))
+			akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);
+		else
+			akati = om.searchColByTagAndParam(tag, param, DatabaseConnection.AKT_COL_ID);
 		
 		ArrayList<String> results = new ArrayList<>();
 		
 		  ArrayList<ArrayList<String>> lista = new ArrayList<>();
-		  
-		  HashMap<String, ArrayList<String>> akati = om.searchColByParam(param, DatabaseConnection.AKT_COL_ID);
 		     
 		  Iterator it = akati.values().iterator(); //iterator koji prolazi kroz listu lista
 		  

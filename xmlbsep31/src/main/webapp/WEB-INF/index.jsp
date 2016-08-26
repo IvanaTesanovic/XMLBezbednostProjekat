@@ -6,6 +6,6 @@
 <head>
 </head>
 <body>
-<c:redirect url="/first" />
+<c:redirect url="/login" />
 </body>
 </html>

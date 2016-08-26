@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import javax.validation.Valid;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import xb.database.DatabaseConnection;
@@ -17,7 +17,7 @@ import xb.manager.ObjectManager;
 import xb.model.Zakon;
 import xb.query.QueryGenerator;
 
-@RestController
+@Controller
 @RequestMapping("/sednica")
 public class SednicaController {
 

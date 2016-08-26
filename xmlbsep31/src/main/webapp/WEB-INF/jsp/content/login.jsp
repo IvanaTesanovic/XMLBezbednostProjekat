@@ -20,7 +20,6 @@
 	<ul class="nav navbar-nav">
 		<li class="nav-item active"><a href="<c:url value="/login"/>" class="nav-link"> <fmt:message key="login.title" /></a></li>
 		<li class="nav-item"><a href="<c:url value="/signup"/>" class="nav-link"> <fmt:message key="signup.title" /></a></li>
-		<li class="nav-item"><a href="<c:url value="j_spring_security_logout" />" class="nav-link"><fmt:message key="home.logout" /></a></li>
 	</ul>
 	</div>
 
