@@ -47,7 +47,7 @@ import com.marklogic.client.util.EditableNamespaceContext;
 
 import xb.certificate.CertificateGenerator;
 import xb.certificate.KeyStoreWriter;
-import xb.controller.DodajAmandmanController;
+import xb.controller.api.DodajAmandmanController;
 import xb.conversion.JaxbXMLConverter;
 import xb.database.DatabaseConnection;
 import xb.encryption.DecryptKEK;

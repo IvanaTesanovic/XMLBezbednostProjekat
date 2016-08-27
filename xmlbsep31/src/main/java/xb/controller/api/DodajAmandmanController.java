@@ -1,4 +1,4 @@
-package xb.controller;
+package xb.controller.api;
 
 import javax.validation.Valid;
 
