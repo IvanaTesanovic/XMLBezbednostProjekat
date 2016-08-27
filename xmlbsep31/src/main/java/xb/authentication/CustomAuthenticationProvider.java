@@ -48,16 +48,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public boolean supports(Class<?> arg0) {
 		return arg0.equals(UsernamePasswordAuthenticationToken.class);
 	}
-	
-	/**private boolean validatePassword(String credentials, TipKorisnik korisnik) {
-		boolean retVal = false;
-		//TODO
-		//ovde treba unhash-ovati lozinku da bi se izvrsila provera!
-		if (StringUtils.isNotBlank(korisnik.getLozinka()))
-			retVal = (PasswordEncoder.getEncodedPassword(credentials, korisnik.getKorisnickoIme())).equals(korisnik.getLozinka());
-		return retVal;
-	}*/
-	
+
 	
 	private boolean validatePassword(String credentials, TipKorisnik korisnik) {
 		boolean retVal = false;
