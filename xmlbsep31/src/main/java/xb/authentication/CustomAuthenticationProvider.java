@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import xb.model.TipKorisnik;
+import xb.password.PasswordEncoder;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -46,7 +47,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		//TODO
 		//ovde treba unhash-ovati lozinku da bi se izvrsila provera!
 		if (StringUtils.isNotBlank(korisnik.getLozinka()))
-			retVal = credentials.equals(korisnik.getLozinka());
+			retVal = (PasswordEncoder.getEncodedPassword(credentials, korisnik.getKorisnickoIme())).equals(korisnik.getLozinka());
 		return retVal;
 	}
 	
