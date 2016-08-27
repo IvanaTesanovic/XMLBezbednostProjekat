@@ -3,12 +3,6 @@ package xb.authentication;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
-/**
- * Authentication utility class.
- * 
- * @author m.radojcic
- *
- */
 public class AuthenticationUtil {
 
 	/**
