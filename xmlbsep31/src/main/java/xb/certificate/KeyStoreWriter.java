@@ -25,7 +25,7 @@ import java.util.UUID;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 
-import xb.controller.FirstController;
+import xb.controller.api.FirstController;
 import xb.model.Korisnici;
 import xb.model.TipKorisnik;
 

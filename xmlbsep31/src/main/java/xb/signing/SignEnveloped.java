@@ -44,7 +44,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import xb.controller.FirstController;
+import xb.controller.api.FirstController;
 
 
 /**

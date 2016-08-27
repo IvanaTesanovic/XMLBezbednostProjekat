@@ -1,4 +1,4 @@
-package xb.controller;
+package xb.controller.api;
 
 import java.util.ArrayList;
 import java.util.List;
