@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import xb.database.DatabaseConnection;
+import xb.manager.ObjectManager;
+import xb.model.Korisnici;
+import xb.model.TipKorisnik;
+
 /**
  * Kontroler koji obradjuje zahteve koji dolaze sa pocetne stranice.
  * Na pocetnoj strani za gradjanina postoji search, a sa ove strane korisnici sistema (odbornici i predsednici skupstine)
@@ -20,9 +25,9 @@ public class FirstController {
 	public ModelAndView get() {
 		
 //		ObjectManager<Korisnici> korisnici = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
-//		
+////		
 //		Korisnici korisnicii = (Korisnici)korisnici.readFromDB(DatabaseConnection.USERS_DOC_ID);
-//		
+////		
 //		TipKorisnik korisnik = new TipKorisnik();
 //		korisnik.setEmail("s.m@gmail.com");
 //		korisnik.setIme("sonja");
@@ -31,7 +36,6 @@ public class FirstController {
 //		korisnik.setLozinka(PasswordEncoder.getEncodedPassword("maslacak", "freshsonia"));
 //		korisnik.setUloga("odbornik");
 //		
-//		korisnicii.getKorisnik().add(korisnik);
 //		korisnici.generateKeyStore(korisnik);
 		
 //		ObjectManager<Zakon> zakon = new ObjectManager<>(FirstController.class.getClassLoader().getResource("Schemas/Akt.xsd"));

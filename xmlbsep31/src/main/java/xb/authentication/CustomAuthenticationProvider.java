@@ -10,9 +10,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import xb.controller.api.SpisakAkataController;
+import xb.database.DatabaseConnection;
+import xb.manager.ObjectManager;
+import xb.model.Korisnici;
 import xb.model.TipKorisnik;
+import xb.password.PasswordEncoder;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -22,9 +28,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String credentials = (String)arg0.getCredentials();
 
 		//TODO
-		//treba pronaci korisnika sa datim korisnickim imenom tj proci kroz listu i naci
-		//Korisnik korisnik = korisnikRepository.findByKorisnickoIme(username);
+		ObjectManager<Korisnici> objects = new ObjectManager<Korisnici>(CustomAuthenticationProvider.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
+		Korisnici ks = (Korisnici)objects.readFromDB(DatabaseConnection.USERS_DOC_ID);
+		ks.getListaKorisnika().size();
+		ArrayList<TipKorisnik> korisnici = (ArrayList<TipKorisnik>)ks.getListaKorisnika();
 		TipKorisnik korisnik = new TipKorisnik();
+		
+		for(TipKorisnik tk: korisnici)
+			if(tk.getKorisnickoIme().equals(username))
+				korisnik = tk;
 		
 		validateUser(korisnik, credentials);
 		List<GrantedAuthority> authorities = loadAuthorities(korisnik);
@@ -37,13 +49,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		return arg0.equals(UsernamePasswordAuthenticationToken.class);
 	}
 	
-	
-	private boolean validatePassword(String credentials, TipKorisnik korisnik) {
+	/**private boolean validatePassword(String credentials, TipKorisnik korisnik) {
 		boolean retVal = false;
 		//TODO
 		//ovde treba unhash-ovati lozinku da bi se izvrsila provera!
 		if (StringUtils.isNotBlank(korisnik.getLozinka()))
-			retVal = credentials.equals(korisnik.getLozinka());
+			retVal = (PasswordEncoder.getEncodedPassword(credentials, korisnik.getKorisnickoIme())).equals(korisnik.getLozinka());
+		return retVal;
+	}*/
+	
+	
+	private boolean validatePassword(String credentials, TipKorisnik korisnik) {
+		boolean retVal = false;
+		//TODO
+		if (StringUtils.isNotBlank(korisnik.getLozinka()))
+			retVal = (PasswordEncoder.getEncodedPassword(credentials, korisnik.getKorisnickoIme())).equals(korisnik.getLozinka());
 		return retVal;
 	}
 	
@@ -60,10 +80,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		//TODO
 		/** za svakog korisnika treba vratiti njegovu ulogu i dodati u listu */
-//		Collection<Uloga> uloge = korisnik.getUloge();
-//		for (Uloga ul : uloge) {
-//			authorities.add(new SimpleGrantedAuthority(ul.getUloga()));
-//		}
+		authorities.add(new SimpleGrantedAuthority(korisnik.getUloga()));
 		return authorities;
 	}
 	
