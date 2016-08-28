@@ -2,7 +2,6 @@ package xb.authentication;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,12 +12,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import xb.controller.api.SpisakAkataController;
+import xb.controller.api.FirstController;
 import xb.database.DatabaseConnection;
 import xb.manager.ObjectManager;
 import xb.model.Korisnici;
 import xb.model.TipKorisnik;
 import xb.password.PasswordEncoder;
+import xb.query.QueryGenerator;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -26,15 +26,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication arg0) throws AuthenticationException {
 		String username = (String)arg0.getPrincipal();
 		String credentials = (String)arg0.getCredentials();
-
+		
 		//TODO
-		ObjectManager<Korisnici> objects = new ObjectManager<Korisnici>(CustomAuthenticationProvider.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
-		Korisnici ks = (Korisnici)objects.readFromDB(DatabaseConnection.USERS_DOC_ID);
-		ks.getListaKorisnika().size();
-		ArrayList<TipKorisnik> korisnici = (ArrayList<TipKorisnik>)ks.getListaKorisnika();
+		ObjectManager<Korisnici> objects = new ObjectManager<Korisnici>(FirstController.class.getClassLoader().getResource("Schemas/Korisnici.xsd"));
+		ArrayList<Korisnici> korisnici = objects.executeQuery(QueryGenerator.getFilesInColl(DatabaseConnection.USERS_COL_ID));
+		ArrayList<TipKorisnik> tks = (ArrayList<TipKorisnik>)korisnici.get(0).getListaKorisnika();
 		TipKorisnik korisnik = new TipKorisnik();
 		
-		for(TipKorisnik tk: korisnici)
+		for(TipKorisnik tk: tks)
 			if(tk.getKorisnickoIme().equals(username))
 				korisnik = tk;
 		
