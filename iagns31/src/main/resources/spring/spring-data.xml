@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<jpa:repositories base-package="repository"/>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+      <property name="dataSource" ref="dataSource" />
+      <property name="packagesToScan" value="model" />
+      <property name="jpaVendorAdapter">
+         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+          	<property name="generateDdl" value="true" /> 
+         </bean>
+      </property>
+      <property name="jpaProperties">
+         <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+<!--             <prop key="hibernate.hbm2ddl.auto">create</prop>  -->
+         </props>
+      </property>
+   </bean>
+   
+   <!--             <prop key="hibernate.hbm2ddl.auto">${ds.hibernate.hbm2ddl}</prop> -->
+<!--             <prop key="hibernate.dialect">${ds.hibernate.dialect}</prop> -->
+ <!--  <prop key="hibernate.hbm2ddl.auto">create-drop</prop> -->
+            
+
+   <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="jdbcUrl" value="jdbc:sqlserver://localhost:1433;databaseName=test31" />
+        <property name="username" value="sa"/>
+        <property name="password" value="root"/>
+        <property name="idleConnectionTestPeriodInMinutes" value="60"/>
+        <property name="idleMaxAgeInMinutes" value="240"/>
+        <property name="maxConnectionsPerPartition" value="30"/>
+        <property name="minConnectionsPerPartition" value="10"/>
+        <property name="partitionCount" value="3"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="statementsCacheSize" value="100"/>
+        <property name="releaseHelperThreads" value="3"/>
+    </bean>
+
+   <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+      <property name="entityManagerFactory" ref="entityManagerFactory" />
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+   <tx:annotation-driven />
+ 
+   <bean id="persistenceExceptionTranslationPostProcessor"
+      class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+		
+</beans>
